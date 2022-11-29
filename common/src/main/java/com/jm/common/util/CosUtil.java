@@ -114,7 +114,7 @@ public class CosUtil {
     /**
      * 向私有存储桶上传文件
      */
-    public HashMap uploadPrivateFile(MultipartFile file, String path) throws IOException {
+    public HashMap uploadprivateFile(MultipartFile file, String path) throws IOException {
         String fileName = file.getOriginalFilename(); //上传文件的名字
         String fileType = fileName.substring(fileName.lastIndexOf(".")); //文件后缀名
         path += IdUtil.simpleUUID() + fileType; //避免重名图片在云端覆盖，所以用UUID作为文件名
@@ -155,8 +155,10 @@ public class CosUtil {
         }
         client.shutdown();
         return map;
-
     }
+
+
+
 
     /**
      * 获取私有读写文件的临时URL外网访问地址
@@ -193,5 +195,7 @@ public class CosUtil {
         }
         client.shutdown();
     }
+
+
 
 }
