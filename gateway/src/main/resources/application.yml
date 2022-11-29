@@ -1,0 +1,82 @@
+server:
+  jetty:
+    threads:
+      acceptors: 4
+      selectors: 8
+  port: 8201
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: gateway
+  cloud:
+#    inetutils:
+#      preferred-networks: 127.0.0.1
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 # Nacos 服务注册中心地址
+        namespace: 5297af98-1329-44e1-9fd0-3a23d1f5e2fd
+        username: nacos
+        password: nacos
+      config:
+        server-addr: 127.0.0.1:8848 # Nacos 作为配置中心地址
+        file-extension: yaml  #指定yaml格式的配置 yml会报错,nacos识别yaml
+        data-id: gateway-dev
+        # 加载配置才需要以下配置
+        namespace: 5297af98-1329-44e1-9fd0-3a23d1f5e2fd
+        group: DEFAULT_GROUP
+
+      #配置中心
+#      config:
+#        group: DEFAULT_GROUP
+#        file-extension: yaml
+#        server-addr: 127.0.0.1:8848
+#        prefix: ${spring.application.name}
+#        namespace: 5297af98-1329-44e1-9fd0-3a23d1f5e2fd
+#      discovery:
+#        namespace: 5297af98-1329-44e1-9fd0-3a23d1f5e2fd
+#        username: nacos
+#        password: nacos
+#        server-addr: 127.0.0.1:8848
+#        heart-beat-interval: 1000
+#        heart-beat-timeout: 1000
+#        group: DEFAULT_GROUP
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8718
+
+  redis:
+    host: 127.0.0.1 # Redis服务器地址
+    database: 0 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+#    password: czhroot  # Redis服务器连接密码（默认为空）
+    timeout: 10000ms # 连接超时时间（毫秒）
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+feign:
+  sentinel:
+    enabled: true
+
+management:
+  # 端点检查（健康检查）
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    root: info
+    com.example.hxds.dr.db.dao: warn
+  pattern:
+    console: "%d{yyyy/MM/dd HH:mm:ss}  %-5level  %msg%n"
+
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - "/bff-driver/**"
+      - "/jmdj-dr/**"
