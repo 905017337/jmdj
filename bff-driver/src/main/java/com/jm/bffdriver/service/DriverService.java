@@ -1,6 +1,7 @@
 package com.jm.bffdriver.service;
 
 import com.jm.bffdriver.controller.form.RegisterNewDriverForm;
+import com.jm.bffdriver.controller.form.UpdateDriverAuthForm;
 
 /**
  * @author caozhenhao
@@ -10,4 +11,6 @@ import com.jm.bffdriver.controller.form.RegisterNewDriverForm;
 public interface DriverService {
 
     long registerNewDriver(RegisterNewDriverForm form);
+
+    int updateDriverAuth(UpdateDriverAuthForm form);
 }

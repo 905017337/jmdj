@@ -48,8 +48,8 @@ public class ExceptionAdvice {
         }
         //处理其余的异常
         else {
-            log.error("执行异常", e);
-            json.set("error", "执行异常");
+            log.error(e.getMessage(), e);
+            json.set("error", e.getMessage());
         }
         return json.toString();
     }

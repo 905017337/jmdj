@@ -9,5 +9,7 @@ import java.util.Map;
  */ 
 public interface DriverService {
 
-    public String registerNewDriver(Map param);
+    String registerNewDriver(Map param);
+
+    int updateDriverAuth(Map<String, Object> param);
 }

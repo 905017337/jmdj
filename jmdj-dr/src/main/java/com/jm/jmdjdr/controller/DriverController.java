@@ -3,6 +3,7 @@ package com.jm.jmdjdr.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.jm.common.util.R;
 import com.jm.jmdjdr.controller.form.RegisterNewDriverForm;
+import com.jm.jmdjdr.controller.form.UpdateDriverAuthForm;
 import com.jm.jmdjdr.service.DriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,12 +34,18 @@ public class DriverController {
     @PostMapping("/registerNewDriver")
     @Operation(summary = "新司机注册")
      public R RegisterNewDriver(@RequestBody  RegisterNewDriverForm form){
-
          Map param = BeanUtil.beanToMap(form);
          String userId = driverService.registerNewDriver(param);
          return R.ok().put("userId",userId);
      }
 
+    @PostMapping("/updateDriverAuth")
+    @Operation(summary = "更新司机实名认证信息")
+    public R updateDriverAuth(@RequestBody @Valid UpdateDriverAuthForm form){
+        Map<String, Object> param = BeanUtil.beanToMap(form);
+        int rows = driverService.updateDriverAuth(param);
+        return R.ok().put("rows", rows);
+    }
 
 
 }

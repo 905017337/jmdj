@@ -5,13 +5,16 @@ tencent:
   map:
     key: NLJBZ-3NCCJ-W4NFT-KIUMF-ONTQ3-MEF6Y
   cloud:
-    appId: 1311457311
-    secretId: AKIDqZ6MPEpHXbS6WigP4WjhT2NTM3Z0Ndlt
-    secretKey: AKIDqZ6MPEpHXbS6WigP4WjhT2NTM3Z0Ndlt
-    region-public: ap-nanjing
-    bucket-public: hxds-public-1311457311
-    region-private: ap-shanghai
-    bucket-private: hxds-private-1311457311
+    appId: 1257530049
+    secretId: AKIDPcaKr89uQimatxkIrQwYy95pN4VhcMrP
+    secretKey: TjlY7cCfw1FE1ZvFOYYGhsoma9TEl381
+    region-public: ap-beijing
+    bucket-public: hxdj-1257530049
+    region-private: ap-beijing
+    bucket-private: hxdj-1257530049
+    face:
+      groupName: hxds
+      region: ap-beijing
 
 wx:
   app-id: wx38deacbf93d0f5db

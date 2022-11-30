@@ -3,6 +3,7 @@ package com.jm.bffdriver.service.impl;
 import cn.hutool.core.convert.Convert;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jm.bffdriver.controller.form.RegisterNewDriverForm;
+import com.jm.bffdriver.controller.form.UpdateDriverAuthForm;
 import com.jm.bffdriver.feign.DrServiceApi;
 import com.jm.bffdriver.service.DriverService;
 import com.jm.common.util.R;
@@ -30,5 +31,14 @@ public class DriverServiceImpl implements DriverService {
         R r = drServiceApi.RegisterNewDriver(form);
         Long userId = Convert.toLong(r.get("userId"));
         return userId;
+    }
+
+    @Override
+    @Transactional
+    @LcnTransaction
+    public int updateDriverAuth(UpdateDriverAuthForm form) {
+        R r = drServiceApi.updateDriverAuth(form);
+        Integer rows = Convert.toInt(r.get("rows"));
+        return rows;
     }
 }
