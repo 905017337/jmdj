@@ -1,5 +1,6 @@
 package com.jm.jmdjdr.mapper;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -16,4 +17,10 @@ public interface DriverDao {
     String searchDriverId(String openId);
 
     int updateDriverAuth(Map<String, Object> param);
+
+    HashMap searchDriverNameAndSex(long driverId);
+
+    int updadteDriverArchive(long driverId);
+
+    HashMap login(String openId);
 }

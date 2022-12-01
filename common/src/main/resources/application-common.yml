@@ -13,7 +13,7 @@ tencent:
     region-private: ap-beijing
     bucket-private: hxdj-1257530049
     face:
-      groupName: hxds
+      groupName: jmdj
       region: ap-beijing
 
 wx:

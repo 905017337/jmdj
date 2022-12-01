@@ -1,5 +1,7 @@
 package com.jm.bffdriver.feign;
 
+import com.jm.bffdriver.controller.form.CreateDriverFaceModelForm;
+import com.jm.bffdriver.controller.form.LoginForm;
 import com.jm.bffdriver.controller.form.RegisterNewDriverForm;
 import com.jm.bffdriver.controller.form.UpdateDriverAuthForm;
 import com.jm.common.util.R;
@@ -29,5 +31,16 @@ public interface DrServiceApi {
      */
     @PostMapping("/driver/updateDriverAuth")
     R updateDriverAuth(UpdateDriverAuthForm form);
+
+    /**
+     * 创建司机面部识别
+     * @param form
+     * @return
+     */
+    @PostMapping("/driver/createDriverFaceModel")
+    R createDriverFaceModel(CreateDriverFaceModelForm form);
+
+    @PostMapping("/driver/login")
+    R login(LoginForm form);
 
 }

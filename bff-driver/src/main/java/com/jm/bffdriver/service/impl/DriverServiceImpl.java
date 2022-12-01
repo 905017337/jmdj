@@ -1,7 +1,10 @@
 package com.jm.bffdriver.service.impl;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.map.MapUtil;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.jm.bffdriver.controller.form.CreateDriverFaceModelForm;
+import com.jm.bffdriver.controller.form.LoginForm;
 import com.jm.bffdriver.controller.form.RegisterNewDriverForm;
 import com.jm.bffdriver.controller.form.UpdateDriverAuthForm;
 import com.jm.bffdriver.feign.DrServiceApi;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 /**
  * @author caozhenhao
@@ -40,5 +44,19 @@ public class DriverServiceImpl implements DriverService {
         R r = drServiceApi.updateDriverAuth(form);
         Integer rows = Convert.toInt(r.get("rows"));
         return rows;
+    }
+
+    @Override
+    public String createDriverFaceModel(CreateDriverFaceModelForm form) {
+        R r = drServiceApi.createDriverFaceModel(form);
+        String result = MapUtil.getStr(r, "result");
+        return result;
+    }
+
+    @Override
+    public HashMap login(LoginForm form) {
+        R r = drServiceApi.login(form);
+        HashMap map = (HashMap)r.get("result");
+        return map;
     }
 }

@@ -2,6 +2,8 @@ package com.jm.jmdjdr.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.jm.common.util.R;
+import com.jm.jmdjdr.controller.form.CreateDriverFaceModelForm;
+import com.jm.jmdjdr.controller.form.LoginForm;
 import com.jm.jmdjdr.controller.form.RegisterNewDriverForm;
 import com.jm.jmdjdr.controller.form.UpdateDriverAuthForm;
 import com.jm.jmdjdr.service.DriverService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -33,7 +36,7 @@ public class DriverController {
 
     @PostMapping("/registerNewDriver")
     @Operation(summary = "新司机注册")
-     public R RegisterNewDriver(@RequestBody  RegisterNewDriverForm form){
+     public R RegisterNewDriver(@RequestBody @Valid RegisterNewDriverForm form){
          Map param = BeanUtil.beanToMap(form);
          String userId = driverService.registerNewDriver(param);
          return R.ok().put("userId",userId);
@@ -47,5 +50,18 @@ public class DriverController {
         return R.ok().put("rows", rows);
     }
 
+    @PostMapping("/createDriverFaceModel")
+    @Operation(summary = "创建司机人脸模型归档")
+    public R createDriverFaceModel(@RequestBody @Valid CreateDriverFaceModelForm form){
+        String result = driverService.createDriverFaceModel(form.getDriverId(),form.getPhoto());
+        return R.ok().put("result",result);
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "登录系统")
+    public R login(@RequestBody  LoginForm form){
+        HashMap map = driverService.login(form.getCode());
+        return R.ok().put("result",map);
+    }
 
 }

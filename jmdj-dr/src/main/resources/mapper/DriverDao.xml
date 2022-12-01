@@ -63,6 +63,7 @@
         from tb_driver
         WHERE `status` != 2 AND open_id=#{openId}
     </select>
+
     <select id="searchDriverBaseInfo" resultType="java.util.HashMap">
         SELECT d.open_id               AS openId,
                d.`name`,
@@ -193,4 +194,16 @@
         FROM tb_driver
         WHERE open_id = #{openId}
     </select>
+    <select id="searchDriverNameAndSex" parameterType="long" resultType="HashMap">
+        select name,
+               sex
+        FROM tb_driver
+        WHERE id = #{driverId}
+    </select>
+
+    <update id="updadteDriverArchive" parameterType="long">
+        UPDATE tb_driver
+        SET archive = 1
+        WHERE id = #{driverId}
+    </update>
 </mapper>

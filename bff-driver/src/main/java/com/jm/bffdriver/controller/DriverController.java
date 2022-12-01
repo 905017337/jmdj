@@ -2,6 +2,9 @@ package com.jm.bffdriver.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.map.MapUtil;
+import com.jm.bffdriver.controller.form.CreateDriverFaceModelForm;
+import com.jm.bffdriver.controller.form.LoginForm;
 import com.jm.bffdriver.controller.form.RegisterNewDriverForm;
 import com.jm.bffdriver.controller.form.UpdateDriverAuthForm;
 import com.jm.bffdriver.service.DriverService;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.HashMap;
 
 /**
  * @author caozhenhao
@@ -36,28 +40,46 @@ public class DriverController {
 
     @PostMapping("/registerNewDriver")
     public R reg(@RequestBody @Valid RegisterNewDriverForm form){
-        long driverId1 = StpUtil.getLoginIdAsLong();
-        System.out.println("用户id11111:"+driverId1);
         long driverId  = driverService.registerNewDriver(form);
         //在saToken上面执行登录，实际上就是缓存userId,然后才有资格拿到令牌
         StpUtil.login(driverId);
-        long driverId2 = StpUtil.getLoginIdAsLong();
-        System.out.println("用户222222id:"+driverId2);
         //生成Token令牌字符串（已经加密）
         String token = StpUtil.getTokenInfo().getTokenValue();
-
         return R.ok().put("token",token);
     }
 
     @PostMapping("/updateDriverAuth")
     @Operation(summary = "更新实名认证信息")
     @SaCheckLogin
-    public R updateDriverAuth(@RequestBody  UpdateDriverAuthForm form){
+    public R updateDriverAuth(@RequestBody @Valid UpdateDriverAuthForm form){
         long driverId = StpUtil.getLoginIdAsLong();
         form.setDriverId(driverId);
         int rows = driverService.updateDriverAuth(form);
         return R.ok().put("rows",rows);
     }
 
+    @PostMapping("/createDriverFaceModel")
+    @Operation(summary = "创建司机人脸模型归档")
+    @SaCheckLogin
+    public R createDriverFaceModel(@RequestBody @Valid CreateDriverFaceModelForm form){
+        long driverId = StpUtil.getLoginIdAsLong();
+        form.setDriverId(driverId);
+        String result = driverService.createDriverFaceModel(form);
+        return R.ok().put("result",result);
+    }
 
+    @PostMapping("/login")
+    @Operation(summary = "登录系统")
+    public R login(@RequestBody @Valid LoginForm form){
+        HashMap map = driverService.login(form);
+        if (map != null){
+            Long driverId = MapUtil.getLong(map, "id");
+            byte realAuth = Byte.parseByte(MapUtil.getStr(map, "realAuth"));
+            Boolean archive = MapUtil.getBool(map, "archive");
+            StpUtil.login(driverId);
+            String token = StpUtil.getTokenInfo().getTokenValue();
+            return R.ok().put("token",token).put("realAuth",realAuth).put("archive",archive);
+        }
+        return R.ok();
+    }
 }
