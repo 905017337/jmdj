@@ -5,16 +5,15 @@ import cn.dev33.satoken.annotation.SaMode;
 import com.jm.common.util.PageUtils;
 import com.jm.common.util.R;
 import com.jm.controller.form.SearchDriverByPageForm;
+import com.jm.controller.form.SearchDriverComprehensiveDataForm;
 import com.jm.service.DriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.HashMap;
 
 /**
  * @author caozhenhao
@@ -29,11 +28,21 @@ public class DriverController {
     @Resource
     private DriverService driverService;
 
+
+
     @PostMapping("/searchDriverByPage")
     @SaCheckPermission(value = {"ROOT","DRIVER:SELECT"},mode = SaMode.OR)
     @Operation(summary = "查询司机分页记录")
-    public R searchDriverByPage(@RequestBody @Valid SearchDriverByPageForm form){
+    public R test(@RequestBody @Valid SearchDriverByPageForm form){
         PageUtils result = driverService.searchDriverByPage(form);
         return R.ok().put("result",result);
+    }
+
+    @PostMapping("/searchDriverComprehensiveData")
+    @SaCheckPermission(value = {"ROOT","DRIVER:SELECT"},mode = SaMode.OR)
+    @Operation(summary = "查询司机综合数据")
+    public R searchDriverComprehensiveData(@RequestBody @Valid SearchDriverComprehensiveDataForm form){
+        HashMap map =  driverService.searchDriverComprehensiveData(form.getRealAuth(),form.getDriverId());
+        return R.ok().put("result",map);
     }
 }

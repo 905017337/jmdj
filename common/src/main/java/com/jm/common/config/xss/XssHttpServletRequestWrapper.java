@@ -85,6 +85,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         buffer.close();
         reader.close();
         in.close();
+        System.out.println(body.toString());
         Map<String,Object> map=JSONUtil.parseObj(body.toString());
         Map<String,Object> result=new LinkedHashMap<>();
         for(String key:map.keySet()){

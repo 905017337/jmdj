@@ -30,4 +30,8 @@ public interface DriverDao {
     ArrayList<HashMap> searchDriverByPage(Map param);
 
     long searchDriverCount(Map param);
+
+    HashMap searchDriverAuth(long driverId);
+
+    HashMap searchDriverRealSummary(long driverId);
 }

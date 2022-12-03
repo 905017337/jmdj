@@ -3,6 +3,8 @@ package com.jm.service;
 import com.jm.common.util.PageUtils;
 import com.jm.controller.form.SearchDriverByPageForm;
 
+import java.util.HashMap;
+
 /**
  * @author caozhenhao
  * @version 1.0
@@ -11,4 +13,6 @@ import com.jm.controller.form.SearchDriverByPageForm;
 public interface DriverService {
 
     PageUtils searchDriverByPage(SearchDriverByPageForm form);
+
+    HashMap searchDriverComprehensiveData(byte realAuth,Long driverId);
 }

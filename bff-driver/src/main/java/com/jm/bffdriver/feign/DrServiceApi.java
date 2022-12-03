@@ -5,6 +5,8 @@ import com.jm.common.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.HashMap;
+
 /**
  * @author caozhenhao
  * @date 2022/11/28 21:47
@@ -60,4 +62,12 @@ public interface DrServiceApi {
      */
     @PostMapping("/settings/searchDriverSettings")
     R searchDriverSettings(SearchDriverSettingsForm form);
+
+    /**
+     * 获取司机的个人信息
+     * @param form
+     * @return
+     */
+    @PostMapping("/driver/searchDriverAuth")
+    R searchDriverAuth(SearchDriverAuthForm form);
 }

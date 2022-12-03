@@ -1,6 +1,8 @@
 package com.jm.bffdriver.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.map.MapUtil;
 import com.jm.bffdriver.controller.form.*;
@@ -98,4 +100,17 @@ public class DriverController {
         HashMap result = driverService.searchWorkBeanData(driverId);
         return R.ok().put("result",result);
     }
+
+    @GetMapping("/searchDriverAuth")
+    @Operation(summary = "查询司机认证信息")
+    @SaCheckLogin
+    public R searchDriverAuth(){
+        long driverId = StpUtil.getLoginIdAsLong();
+        SearchDriverAuthForm form = new SearchDriverAuthForm();
+        form.setDriverId(driverId);
+        HashMap map = driverService.searchDriverAuth(form);
+        return R.ok().put("result",map);
+    }
+
+
 }

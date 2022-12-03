@@ -138,6 +138,18 @@ public class DriverServiceImpl implements DriverService {
         return pageUtils;
     }
 
+    @Override
+    public HashMap searchDriverAuth(long driverId) {
+        HashMap result = driverDao.searchDriverAuth(driverId);
+        return result;
+    }
+
+    @Override
+    public HashMap searchDriverRealSummary(long driverId) {
+        HashMap map = driverDao.searchDriverRealSummary(driverId);
+        return map;
+    }
+
 
     @Override
     @Transactional

@@ -22,4 +22,6 @@ public interface DriverService {
     HashMap searchDriverBaseInfo(SearchDriverBaseInfoForm driverId);
 
     HashMap searchWorkBeanData(long driverId);
+
+    HashMap searchDriverAuth(SearchDriverAuthForm form);
 }
