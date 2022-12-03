@@ -3,23 +3,23 @@ spring:
 
 tencent:
   map:
-    key: NLJBZ-3NCCJ-W4NFT-KIUMF-ONTQ3-MEF6Y
+    key: XXXXX
   cloud:
-    appId: 1257530049
-    secretId: AKIDPcaKr89uQimatxkIrQwYy95pN4VhcMrP
-    secretKey: TjlY7cCfw1FE1ZvFOYYGhsoma9TEl381
-    region-public: ap-beijing
-    bucket-public: hxdj-1257530049
-    region-private: ap-beijing
-    bucket-private: hxdj-1257530049
+    appId: XXXX
+    secretId: XXXX
+    secretKey: XXXXX
+    region-public: XXXX
+    bucket-public: XXXX
+    region-private: XXXX
+    bucket-private: XXXX
     face:
       groupName: jmdj
       region: ap-beijing
 
 wx:
-  app-id: wx38deacbf93d0f5db
-  app-secret: 764532f6f7f3969bc72d2b284fc4a916
-  mch-id: 1514785841 #商户号（课程QQ群共享文件中获取）
+  app-id: XXXX
+  app-secret: XXXX
+  mch-id: XXX #商户号（课程QQ群共享文件中获取）
   key: 123 #（课程QQ群共享文件中获取）
   cert-path: F:/18712174060wws_.pem #商户数字证书文件路径（课程QQ群共享文件中获取）
 
