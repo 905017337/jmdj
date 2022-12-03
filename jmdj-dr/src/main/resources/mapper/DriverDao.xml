@@ -64,7 +64,7 @@
         WHERE `status` != 2 AND open_id=#{openId}
     </select>
 
-    <select id="searchDriverBaseInfo" resultType="java.util.HashMap">
+    <select id="searchDriverBaseInfo" parameterType="long" resultType="java.util.HashMap">
         SELECT d.open_id               AS openId,
                d.`name`,
                d.nickname,

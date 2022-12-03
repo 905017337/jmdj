@@ -3,10 +3,12 @@ package com.jm.jmdjdr.service.impl;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jm.common.exception.HxdsException;
 import com.jm.common.util.MicroAppUtil;
 
+import com.jm.common.util.PageUtils;
 import com.jm.jmdjdr.mapper.DriverDao;
 import com.jm.jmdjdr.mapper.DriverSettingsDao;
 import com.jm.jmdjdr.mapper.WalletDao;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -110,6 +113,31 @@ public class DriverServiceImpl implements DriverService {
         }
         return result;
     }
+
+    @Override
+    public HashMap searchDriverBaseInfo(long driverId) {
+
+        HashMap result = driverDao.searchDriverBaseInfo(driverId);
+        JSONObject summary = JSONUtil.parseObj(MapUtil.getStr(result, "summary"));
+        result.replace("summary",summary);
+        return result;
+    }
+
+    @Override
+    public PageUtils searchDriverByPage(Map param) {
+        long count = driverDao.searchDriverCount(param);
+        ArrayList<HashMap> list = null;
+        if(count == 0){
+            list = new ArrayList<>();
+        }else {
+            list = driverDao.searchDriverByPage(param);
+        }
+        int start = (Integer) param.get("start");
+        int length = (Integer) param.get("length");
+        PageUtils pageUtils = new PageUtils(list, count, start, length);
+        return pageUtils;
+    }
+
 
     @Override
     @Transactional

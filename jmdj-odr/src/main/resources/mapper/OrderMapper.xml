@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jm.jmdjodr.mapper.OrderMapper">
+    <select id="searchDriverTodayBusinessData" parameterType="long" resultType="HashMap">
+        SELECT IFNULL(SUM(TIMESTAMPDIFF(HOUR,end_time, start_time)),0) AS duration,
+               CAST(IFNULL(SUM(real_fee),0) AS CHAR)         AS income,
+               COUNT(id)                                     AS orders
+        FROM tb_order
+        WHERE driver_id = #{driverId}
+          AND `status` IN (5, 6, 7, 8)
+          AND date = CURRENT_DATE
+    </select>
+
+    <insert id="insert" parameterType="com.jm.jmdjodr.pojo.OrderEntity">
+        INSERT INTO tb_order
+        SET uuid = #{uuid},
+            customer_id = #{customerId},
+            start_place = #{startPlace},
+            start_place_location = #{startPlaceLocation},
+            end_place = #{endPlace},
+            end_place_location = #{endPlaceLocation},
+            expects_mileage = #{expectsMileage},
+            expects_fee = #{expectsFee},
+            favour_fee = #{favourFee},
+            charge_rule_id=#{chargeRuleId},
+            car_plate=#{carPlate},
+            car_type=#{carType},
+            date = #{date}
+    </insert>
+
+    <select id="searchOrderIdByUUID" parameterType="String" resultType="String">
+        SELECT CAST(id AS CHAR) AS id
+        FROM tb_order
+        WHERE uuid = #{uuid}
+    </select>
+</mapper>

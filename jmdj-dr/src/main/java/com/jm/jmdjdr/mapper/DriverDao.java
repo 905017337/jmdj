@@ -1,5 +1,6 @@
 package com.jm.jmdjdr.mapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,4 +24,10 @@ public interface DriverDao {
     int updadteDriverArchive(long driverId);
 
     HashMap login(String openId);
+
+    HashMap searchDriverBaseInfo(long driverId);
+
+    ArrayList<HashMap> searchDriverByPage(Map param);
+
+    long searchDriverCount(Map param);
 }

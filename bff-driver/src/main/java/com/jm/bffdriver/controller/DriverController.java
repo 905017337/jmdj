@@ -3,10 +3,7 @@ package com.jm.bffdriver.controller;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.map.MapUtil;
-import com.jm.bffdriver.controller.form.CreateDriverFaceModelForm;
-import com.jm.bffdriver.controller.form.LoginForm;
-import com.jm.bffdriver.controller.form.RegisterNewDriverForm;
-import com.jm.bffdriver.controller.form.UpdateDriverAuthForm;
+import com.jm.bffdriver.controller.form.*;
 import com.jm.bffdriver.service.DriverService;
 import com.jm.common.util.R;
 import io.swagger.v3.oas.annotations.Operation;
@@ -81,5 +78,24 @@ public class DriverController {
             return R.ok().put("token",token).put("realAuth",realAuth).put("archive",archive);
         }
         return R.ok();
+    }
+
+    @PostMapping("/searchDriverBaseInfo")
+    @Operation(summary = "查询司机的基本信息")
+    @SaCheckLogin
+    public R searchDriverBaseInfo(){
+        long driverId = StpUtil.getLoginIdAsLong();
+        SearchDriverBaseInfoForm form = new SearchDriverBaseInfoForm();
+        form.setDriverId(driverId);
+        HashMap map = driverService.searchDriverBaseInfo(form);
+        return R.ok().put("result",map);
+    }
+    @PostMapping("/searchWorkbenchData")
+    @Operation(summary = "查询司机工作台数据")
+    @SaCheckLogin
+    public R searchWorkbenchData(){
+        long driverId = StpUtil.getLoginIdAsLong();
+        HashMap result = driverService.searchWorkBeanData(driverId);
+        return R.ok().put("result",result);
     }
 }

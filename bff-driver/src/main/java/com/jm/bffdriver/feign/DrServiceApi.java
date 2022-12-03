@@ -1,9 +1,6 @@
 package com.jm.bffdriver.feign;
 
-import com.jm.bffdriver.controller.form.CreateDriverFaceModelForm;
-import com.jm.bffdriver.controller.form.LoginForm;
-import com.jm.bffdriver.controller.form.RegisterNewDriverForm;
-import com.jm.bffdriver.controller.form.UpdateDriverAuthForm;
+import com.jm.bffdriver.controller.form.*;
 import com.jm.common.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +37,27 @@ public interface DrServiceApi {
     @PostMapping("/driver/createDriverFaceModel")
     R createDriverFaceModel(CreateDriverFaceModelForm form);
 
+    /**
+     * 司机登录系统
+     * @param form
+     * @return
+     */
     @PostMapping("/driver/login")
     R login(LoginForm form);
 
+    /**
+     * 获取司机的基本信息
+     * @param driverId
+     * @return
+     */
+    @PostMapping("/driver/searchDriverBaseInfo")
+    R searchDriverBaseInfo(SearchDriverBaseInfoForm driverId);
+
+    /**
+     * 获取司机端配置
+     * @param form
+     * @return
+     */
+    @PostMapping("/settings/searchDriverSettings")
+    R searchDriverSettings(SearchDriverSettingsForm form);
 }

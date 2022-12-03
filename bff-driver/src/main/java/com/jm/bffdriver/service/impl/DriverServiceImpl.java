@@ -3,11 +3,9 @@ package com.jm.bffdriver.service.impl;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.map.MapUtil;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
-import com.jm.bffdriver.controller.form.CreateDriverFaceModelForm;
-import com.jm.bffdriver.controller.form.LoginForm;
-import com.jm.bffdriver.controller.form.RegisterNewDriverForm;
-import com.jm.bffdriver.controller.form.UpdateDriverAuthForm;
+import com.jm.bffdriver.controller.form.*;
 import com.jm.bffdriver.feign.DrServiceApi;
+import com.jm.bffdriver.feign.OdrServiceApi;
 import com.jm.bffdriver.service.DriverService;
 import com.jm.common.util.R;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,8 @@ public class DriverServiceImpl implements DriverService {
     @Resource
     private DrServiceApi drServiceApi;
 
+    @Resource
+    private OdrServiceApi odrServiceApi;
 
     @Override
     @Transactional
@@ -58,5 +58,32 @@ public class DriverServiceImpl implements DriverService {
         R r = drServiceApi.login(form);
         HashMap map = (HashMap)r.get("result");
         return map;
+    }
+
+    @Override
+    public HashMap searchDriverBaseInfo(SearchDriverBaseInfoForm form) {
+        R r = drServiceApi.searchDriverBaseInfo(form);
+        HashMap map = (HashMap) r.get("result");
+        return map;
+    }
+
+    @Override
+    public HashMap searchWorkBeanData(long driverId) {
+        //查询司机当天的业务数据
+        SearchDriverTodayBusinessDataForm form_1 = new SearchDriverTodayBusinessDataForm();
+        form_1.setDriverId(driverId);
+        R r = odrServiceApi.searchDriverTodayBusinessData(form_1);
+        HashMap business = (HashMap) r.get("result");
+
+        //查询司机的设置
+        SearchDriverSettingsForm form_2 = new SearchDriverSettingsForm();
+        form_2.setDriverId(driverId);
+        r = drServiceApi.searchDriverSettings(form_2);
+        HashMap settings = (HashMap) r.get("result");
+        HashMap result = new HashMap(){{
+            put("business",business);
+            put("settings",settings);
+        }};
+        return result;
     }
 }

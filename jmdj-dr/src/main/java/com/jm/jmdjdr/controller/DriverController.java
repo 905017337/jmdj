@@ -1,11 +1,9 @@
 package com.jm.jmdjdr.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.jm.common.util.PageUtils;
 import com.jm.common.util.R;
-import com.jm.jmdjdr.controller.form.CreateDriverFaceModelForm;
-import com.jm.jmdjdr.controller.form.LoginForm;
-import com.jm.jmdjdr.controller.form.RegisterNewDriverForm;
-import com.jm.jmdjdr.controller.form.UpdateDriverAuthForm;
+import com.jm.jmdjdr.controller.form.*;
 import com.jm.jmdjdr.service.DriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -64,4 +62,23 @@ public class DriverController {
         return R.ok().put("result",map);
     }
 
+
+    @PostMapping("/searchDriverBaseInfo")
+    @Operation(summary = "查询司机基本信息")
+    public R searchDriverBaseInfo(@RequestBody @Valid SearchDriverBaseInfoForm form){
+        HashMap result = driverService.searchDriverBaseInfo(form.getDriverId());
+        return R.ok().put("result",result);
+    }
+
+    @PostMapping("/searchDriverByPage")
+    @Operation(summary = "查询司机分页记录")
+    public R searchDriverByPage(@RequestBody @Valid SearchDriverByPageForm form){
+        Map param = BeanUtil.beanToMap(form);
+        int page = form.getPage();
+        int length = form.getLength();
+        int start = (page - 1) * length;
+        param.put("start",start);
+        PageUtils result = driverService.searchDriverByPage(param);
+        return R.ok().put("result",result);
+    }
 }

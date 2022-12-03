@@ -11,4 +11,6 @@ import com.jm.jmdjdr.pojo.DriverSettingsEntity;
 public interface DriverSettingsDao {
 
     void insertDriverSettings(DriverSettingsEntity entity);
+
+    String searchDriverSettings(long driverId);
 }

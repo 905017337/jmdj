@@ -1,5 +1,7 @@
 package com.jm.jmdjdr.service;
 
+import com.jm.common.util.PageUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,4 +19,8 @@ public interface DriverService {
     String createDriverFaceModel(long driverId,String photo);
 
     HashMap login(String code);
+
+    HashMap searchDriverBaseInfo(long driverId);
+
+    PageUtils searchDriverByPage(Map param);
 }
