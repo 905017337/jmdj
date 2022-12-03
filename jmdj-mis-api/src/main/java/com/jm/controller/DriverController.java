@@ -22,9 +22,9 @@ import javax.validation.Valid;
  * @date 2022/12/3 12:32
  */
 @RestController
-@RequestMapping("/dirver")
+@RequestMapping("/driver")
 @Tag(name = "DriverController",description = "司机管理web接口")
-public class DrverController {
+public class DriverController {
 
     @Resource
     private DriverService driverService;
