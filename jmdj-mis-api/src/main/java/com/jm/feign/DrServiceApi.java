@@ -3,8 +3,11 @@ package com.jm.feign;
 import com.jm.common.util.R;
 import com.jm.controller.form.SearchDriverByPageForm;
 import com.jm.controller.form.SearchDriverRealSummaryForm;
+import com.jm.controller.form.UpdateDriverRealAuthForm;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Map;
 
 /**
  * @author caozhenhao
@@ -19,4 +22,7 @@ public interface DrServiceApi {
 
     @PostMapping("/driver/searchDriverRealSummary")
     R searchDriverRealSummary(SearchDriverRealSummaryForm form);
+
+    @PostMapping("/driver/updateDriverRealAuth")
+    R updateDriverRealAuth(UpdateDriverRealAuthForm param);
 }

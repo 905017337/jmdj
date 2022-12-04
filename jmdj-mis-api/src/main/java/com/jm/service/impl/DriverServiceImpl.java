@@ -8,6 +8,7 @@ import com.jm.common.util.PageUtils;
 import com.jm.common.util.R;
 import com.jm.controller.form.SearchDriverByPageForm;
 import com.jm.controller.form.SearchDriverRealSummaryForm;
+import com.jm.controller.form.UpdateDriverRealAuthForm;
 import com.jm.feign.DrServiceApi;
 import com.jm.service.DriverService;
 import org.springframework.stereotype.Service;
@@ -70,5 +71,13 @@ public class DriverServiceImpl implements DriverService {
             //TODO
         }
         return map;
+    }
+
+    @Override
+    public int updateDriverRealAuth(UpdateDriverRealAuthForm param) {
+        R r = drServiceApi.updateDriverRealAuth(param);
+        Integer rows = MapUtil.getInt(r, "rows");
+        //TODO 还应该调用消息子系统发送通知消息
+        return rows;
     }
 }

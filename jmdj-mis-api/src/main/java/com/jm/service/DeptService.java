@@ -1,6 +1,7 @@
 package com.jm.service;
 
 import com.jm.common.util.PageUtils;
+import com.jm.controller.form.UpdateDriverRealAuthForm;
 import com.jm.pojo.DeptEntity;
 
 import java.util.ArrayList;
@@ -25,4 +26,6 @@ public interface DeptService {
     int update(DeptEntity dept);
 
     int insert(DeptEntity dept);
+
+
 }

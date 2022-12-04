@@ -1,7 +1,11 @@
 package com.jm.service.impl;
 
+import cn.hutool.core.map.MapUtil;
 import com.jm.common.exception.HxdsException;
 import com.jm.common.util.PageUtils;
+import com.jm.common.util.R;
+import com.jm.controller.form.UpdateDriverRealAuthForm;
+import com.jm.feign.DrServiceApi;
 import com.jm.mapper.DeptMapper;
 import com.jm.pojo.DeptEntity;
 import com.jm.service.DeptService;
@@ -22,6 +26,9 @@ public class DeptServiceImpl implements DeptService {
 
     @Resource
     private DeptMapper deptMapper;
+
+    @Resource
+    private DrServiceApi drServiceApi;
     @Override
     public PageUtils searchDeptByPage(Map param) {
         ArrayList<HashMap> list = deptMapper.searchDeptByPage(param);
@@ -64,4 +71,6 @@ public class DeptServiceImpl implements DeptService {
         int rows = deptMapper.insert(dept);
         return rows;
     }
+
+
 }

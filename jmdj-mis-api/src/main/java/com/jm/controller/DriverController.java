@@ -6,6 +6,7 @@ import com.jm.common.util.PageUtils;
 import com.jm.common.util.R;
 import com.jm.controller.form.SearchDriverByPageForm;
 import com.jm.controller.form.SearchDriverComprehensiveDataForm;
+import com.jm.controller.form.UpdateDriverRealAuthForm;
 import com.jm.service.DriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,5 +45,13 @@ public class DriverController {
     public R searchDriverComprehensiveData(@RequestBody @Valid SearchDriverComprehensiveDataForm form){
         HashMap map =  driverService.searchDriverComprehensiveData(form.getRealAuth(),form.getDriverId());
         return R.ok().put("result",map);
+    }
+
+    @PostMapping("/updateDriverRealAuth")
+    @SaCheckPermission(value = {"ROOT","DRIVER:UPDATE"},mode = SaMode.OR)
+    @Operation(summary = "更新司机的实名认证状态")
+    public R updateDriverRealAuth(@RequestBody @Valid UpdateDriverRealAuthForm form){
+        int rows = driverService.updateDriverRealAuth(form);
+        return R.ok().put("rows",rows);
     }
 }
