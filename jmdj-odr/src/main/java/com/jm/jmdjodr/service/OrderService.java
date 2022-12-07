@@ -1,5 +1,8 @@
 package com.jm.jmdjodr.service;
 
+import com.jm.jmdjodr.pojo.OrderBillEntity;
+import com.jm.jmdjodr.pojo.OrderEntity;
+
 import java.util.HashMap;
 
 /**
@@ -10,4 +13,6 @@ import java.util.HashMap;
 public interface OrderService {
 
     HashMap searchDriverTodayBusinessData(long driverId);
+
+    String insertOrder(OrderEntity orderEntity, OrderBillEntity orderBillEntity);
 }

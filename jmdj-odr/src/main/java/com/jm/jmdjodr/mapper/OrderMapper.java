@@ -1,5 +1,7 @@
 package com.jm.jmdjodr.mapper;
 
+import com.jm.jmdjodr.pojo.OrderEntity;
+
 import java.util.HashMap;
 
 /**
@@ -9,5 +11,10 @@ import java.util.HashMap;
  */
 public interface OrderMapper {
 
+    int insert(OrderEntity entity);
+
+    String searchOrderIdByUUID(String uuid);
+
     HashMap searchDriverTodayBusinessData(long driverId);
+
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jm.jmdjodr.mapper.OrderBillMapper">
+
+    <insert id="insert" parameterType="com.jm.jmdjodr.pojo.OrderBillEntity">
+        INSERT INTO tb_order_bill
+        SET order_id = #{orderId},
+            base_mileage = #{baseMileage},
+            base_mileage_price = #{baseMileagePrice},
+            exceed_mileage_price = #{exceedMileagePrice},
+            base_minute = #{baseMinute},
+            exceed_minute_price = #{exceedMinutePrice},
+            base_return_mileage = #{baseReturnMileage},
+            exceed_return_price = #{exceedReturnPrice}
+    </insert>
+
+</mapper>
