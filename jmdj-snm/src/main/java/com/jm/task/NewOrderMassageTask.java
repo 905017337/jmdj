@@ -33,46 +33,41 @@ public class NewOrderMassageTask {
      * 同步发送新订单消息
      * @param list
      */
-    public void sendNewOrderMessage(ArrayList<NewOrderMessage> list){
-        int ttl = 1 * 60 * 1000; //新订单消息缓存过期时间 1分钟
-        String exchangeName = "new_order_private"; //交换机名称
-        try(
+    public void sendNewOrderMessage(ArrayList<NewOrderMessage> list) {
+        int ttl = 1 * 60 * 1000;
+        String exchangeName = "new_order_private";
+        try (
                 Connection connection = factory.newConnection();
                 Channel channel = connection.createChannel();
-                ) {
-
-            //定义交换机，根据routing key 路由消息
+        ) {
             channel.exchangeDeclare(exchangeName, BuiltinExchangeType.DIRECT);
-            HashMap param = new HashMap<>();
+            HashMap param = new HashMap();
             for (NewOrderMessage message : list) {
-                HashMap map = new HashMap(){{
-                    //MQ消息的属性信息
-                    put("orderId",message.getOrderId());
-                    put("from",message.getFrom());
-                    put("to",message.getTo());
-                    put("expectsFee",message.getExpectsFee());
-                    put("mileage",message.getMileage());
-                    put("minute",message.getMinute());
-                    put("distance",message.getDistance());
-                    put("favourFee",message.getFavourFee());
+                HashMap map = new HashMap() {{
+                    put("orderId", message.getOrderId());
+                    put("from", message.getFrom());
+                    put("to", message.getTo());
+                    put("expectsFee", message.getExpectsFee());
+                    put("mileage", message.getMileage());
+                    put("minute", message.getMinute());
+                    put("distance", message.getDistance());
+                    put("favourFee", message.getFavourFee());
                 }};
-                //创建消息属性对象
-                AMQP.BasicProperties properties = new AMQP.BasicProperties().builder().contentEncoding("UTF-8")
-                        .headers(map).expiration(ttl+"").build();
+                AMQP.BasicProperties properties = new AMQP.BasicProperties()
+                        .builder().contentEncoding("UTF-8").headers(map)
+                        .expiration(ttl + "").build();
 
-                String queueName = "queue_"+message.getUserId();
+                String queueName = "queue_" + message.getUserId();
                 String routingKey = message.getUserId();
-                channel.queueDeclare(queueName,true,false,false,param);
-                channel.queueBind(queueName,exchangeName,routingKey);
-                channel.basicPublish(exchangeName,routingKey,properties,("新订单"+message.getOrderId()).getBytes());
-                log.debug(message.getUserId()+"的新订单消息发送成功");
+                channel.queueDeclare(queueName, true, false, false, param);
+                channel.queueBind(queueName, exchangeName, routingKey);
+                channel.basicPublish(exchangeName, routingKey, properties, ("新订单" + message.getOrderId()).getBytes());
+                log.debug(message.getUserId() + "的新订单消息发送成功");
             }
         } catch (Exception e) {
-            log.error("执行异常",e);
-            throw  new HxdsException("新订单消息发送失败");
+            log.error("执行异常", e);
+            throw new HxdsException("新订单消息发送失败");
         }
-
-
     }
 
     /**
@@ -153,5 +148,47 @@ public class NewOrderMassageTask {
 
         return  null;
 
+    }
+
+    public void deleteNewOrderQueue(long userId) {
+        String exchangeName = "new_order_private"; //交换机名字
+        String queueName = "queue_" + userId; //队列名字
+        try (
+                Connection connection = factory.newConnection();
+                Channel channel = connection.createChannel();
+        ) {
+            channel.exchangeDeclare(exchangeName,BuiltinExchangeType.DIRECT);
+            channel.queueDelete(queueName);
+            log.debug(userId + "的新订单消息队列成功删除");
+        } catch (Exception e) {
+            log.error(userId + "的新订单队列删除失败", e);
+            throw new HxdsException("新订单队列删除失败");
+        }
+    }
+
+    @Async
+    public void deleteNewOrderQueueAsync(long userId){
+        this.deleteNewOrderQueue(userId);
+    }
+
+    public void clearNewOrderQueue(long userId){
+        String exchangeName = "new_order_private"; //交换机名字
+        String queueName = "queue_" + userId; //队列名字
+        try (
+                Connection connection = factory.newConnection();
+                Channel channel = connection.createChannel();
+        ) {
+            channel.exchangeDeclare(exchangeName,BuiltinExchangeType.DIRECT);
+            channel.queuePurge(queueName);
+            log.debug(userId + "的新订单消息队列清空删除");
+        } catch (Exception e) {
+            log.error(userId + "的新订单队列清空失败", e);
+            throw new HxdsException("新订单队列清空失败");
+        }
+    }
+
+    @Async
+    public void clearNewOrderQueueAsync(long userId){
+        this.clearNewOrderQueue(userId);
     }
 }

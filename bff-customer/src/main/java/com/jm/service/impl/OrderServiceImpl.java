@@ -8,11 +8,14 @@ import com.jm.controller.form.*;
 import com.jm.feign.MpsServiceApi;
 import com.jm.feign.OdrServiceApi;
 import com.jm.feign.RuleServiceApi;
+import com.jm.feign.SnmServiceApi;
 import com.jm.service.OrderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.xml.crypto.Data;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,6 +36,8 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private RuleServiceApi ruleServiceApi;
 
+    @Resource
+    private SnmServiceApi snmServiceApi;
 
     @Override
     public HashMap createNewOrder(CreateNewOrderForm form) {
@@ -115,14 +120,30 @@ public class OrderServiceImpl implements OrderService {
             String orderId = MapUtil.getStr(r,"result");
 
             //TODO 发送通知到符合条件的司机抢单
+            SendNewOrderMessageForm form_5 = new SendNewOrderMessageForm();
+            String[] driverContent = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                HashMap hashMap = list.get(i);
+                String driverId = MapUtil.getStr(hashMap, "driverId");
+                String distance = MapUtil.getStr(hashMap, "distance");
+                distance = new BigDecimal(distance).setScale(1, RoundingMode.CEILING).toString();
+                driverContent[i] = driverId+"#"+distance;
+            }
+            form_5.setDriversContent(driverContent);
+            form_5.setOrderId(Long.parseLong(orderId));
+            form_5.setFrom(startPlace);
+            form_5.setTo(endPlace);
+            form_5.setExpectsFee(expectsFee);
+            //里程转换保留小数点后一位
+            mileage = new BigDecimal(mileage).setScale(1, RoundingMode.CEILING).toString();
+            form_5.setMileage(mileage);
+            form_5.setMinute(minute);
+            form_5.setFavourFee(favourFee);
+            snmServiceApi.sendNewOrderMessageAsync(form_5);
 
             result.put("orderId",orderId);
             result.replace("count",list.size());
         }
-
-
-
-
 
         return result;
     }
