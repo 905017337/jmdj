@@ -7,6 +7,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.map.MapUtil;
 import com.jm.bffdriver.controller.form.*;
 import com.jm.bffdriver.service.DriverService;
+import com.jm.bffdriver.service.MpsService;
 import com.jm.common.util.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,6 +31,9 @@ public class DriverController {
 
     @Resource
     private DriverService driverService;
+
+    @Resource
+    private MpsService mpsService;
 
     @GetMapping("/")
     public String test(){
@@ -113,4 +117,23 @@ public class DriverController {
     }
 
 
+
+    @PostMapping("/location/updateLocationCache")
+    @Operation(summary = "更新司机的实时位置")
+    public R updateLocationCache(@RequestBody @Valid UpdateLocationCacheForm form){
+
+        long driverId = StpUtil.getLoginIdAsLong();
+        form.setDriverId(driverId);
+        mpsService.updateLocationCache(form);
+        return R.ok();
+    }
+
+    @PostMapping("/location/removeLocationCache")
+    @Operation(summary = "删除司机的位置")
+    public R removeLocationCache(@RequestBody @Valid RemoveLocationCacheForm form){
+        long driverId = StpUtil.getLoginIdAsLong();
+        form.setDriverId(driverId);
+        mpsService.removeLocationCache(form);
+        return R.ok();
+    }
 }

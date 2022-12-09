@@ -1,6 +1,5 @@
 package com.jm.jmdjodr.controller;
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import com.jm.common.util.R;
 import com.jm.jmdjodr.controller.form.InsertOrderForm;
@@ -37,45 +36,11 @@ public class OrderController {
         return R.ok().put("result",result);
     }
 
+
+
     @PostMapping("/insertOrder")
     @Operation(summary = "顾客下单")
-    public R insertOrder(@RequestBody @Valid InsertOrderForm form){
-        OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setUuid(form.getUuid());
-        orderEntity.setCustomerId(form.getCustomerId());
-        orderEntity.setStartPlace(form.getStartPlace());
-        JSONObject json = new JSONObject();
-        json.set("latitude",form.getStartPlaceLatitude());
-        json.set("longitude",form.getStartPlaceLongitude());
-        orderEntity.setStartPlaceLocation(json.toString());
-        orderEntity.setEndPlace(form.getEndPlace());
-        json = new JSONObject();
-        json.set("latitude",form.getEndPlaceLatitude());
-        json.set("longitude",form.getEndPlaceLongitude());
-        orderEntity.setEndPlaceLocation(json.toString());
-        orderEntity.setExpectsMileage(new BigDecimal(form.getExpectsMileage()));
-        orderEntity.setExpectsFee(new BigDecimal(form.getExpectsFee()));
-        orderEntity.setFavourFee(new BigDecimal(form.getFavourFee()));
-        orderEntity.setChargeRuleId(form.getChargeRuleId());
-        orderEntity.setCarPlate(form.getCarPlate());
-        orderEntity.setCarType(form.getCarType());
-        orderEntity.setDate(form.getDate());
-
-        OrderBillEntity billEntity = new OrderBillEntity();
-        billEntity.setBaseMileage(form.getBaseMileage());
-        billEntity.setBaseMileagePrice(new BigDecimal(form.getBaseMileagePrice()));
-        billEntity.setExceedMileagePrice(new BigDecimal(form.getExceedMileagePrice()));
-        billEntity.setBaseMinute(form.getBaseMinute());
-        billEntity.setExceedMinutePrice(new BigDecimal(form.getExceedMinutePrice()));
-        billEntity.setBaseReturnMileage(form.getBaseReturnMileage());
-        billEntity.setExceedReturnPrice(new BigDecimal(form.getExceedReturnPrice()));
-
-        String id = orderService.insertOrder(orderEntity, billEntity);
-        return R.ok().put("result",id);
-    }
-
-    @PostMapping("/test")
-    public R test(@RequestBody @Valid InsertOrderForm form){
+    public R insertOrder(@RequestBody InsertOrderForm form){
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setUuid(form.getUuid());
         orderEntity.setCustomerId(form.getCustomerId());

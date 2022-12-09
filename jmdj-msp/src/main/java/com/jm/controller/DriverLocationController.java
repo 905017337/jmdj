@@ -3,6 +3,7 @@ package com.jm.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.jm.common.util.R;
 import com.jm.controller.form.RemoveLocationCacheForm;
+import com.jm.controller.form.SearchBefittingDriverAboutOrderForm;
 import com.jm.controller.form.UpdateLocationCacheForm;
 import com.jm.service.DriverLocationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -44,6 +46,19 @@ public class DriverLocationController {
         driverLocationService.removeLocationCache(form.getDriverId());
         return R.ok();
     }
+    
+    @PostMapping("/searchBefittingDriverAboutOrder")
+    @Operation(summary = "查询符合谋个订单接单的司机列表")
+    public R searchBefittingDriverAboutOrder(@RequestBody @Valid SearchBefittingDriverAboutOrderForm form){
+        double startPlaceLatitude = Double.parseDouble(form.getStartPlaceLatitude());
+        double startPlaceLongititude = Double.parseDouble(form.getStartPlaceLongitude());
+        double endPlaceLatitude = Double.parseDouble(form.getEndPlaceLatitude());
+        double endPlaceLongitude = Double.parseDouble(form.getEndPlaceLongitude());
+        double mileage = Double.parseDouble(form.getMileage());
+         ArrayList result = driverLocationService.searchBefittingDriverAboutOrder(startPlaceLatitude, startPlaceLongititude,
+                endPlaceLatitude, endPlaceLongitude, mileage);
+         return R.ok().put("result",result);
 
+    }
 
 }

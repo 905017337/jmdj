@@ -2,6 +2,8 @@ package com.jm.service;
 
 import com.jm.controller.form.CreateNewOrderForm;
 
+import java.util.HashMap;
+
 /**
  * @author caozhenhao
  * @version 1.0
@@ -9,5 +11,5 @@ import com.jm.controller.form.CreateNewOrderForm;
  */
 public interface OrderService {
 
-    int createNewOrder(CreateNewOrderForm form);
+    HashMap createNewOrder(CreateNewOrderForm form);
 }

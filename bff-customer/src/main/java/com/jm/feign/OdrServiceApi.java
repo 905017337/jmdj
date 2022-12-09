@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface OdrServiceApi {
 
     @PostMapping("/order/insertOrder")
-    public R insertOrder(InsertOrderForm form);
+    R insertOrder(InsertOrderForm form);
 
 }

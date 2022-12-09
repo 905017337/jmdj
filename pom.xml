@@ -20,6 +20,7 @@
         <module>jmdj-msp</module>
         <module>jmdj-cst</module>
         <module>jmdj-rule</module>
+        <module>jmdj-snm</module>
     </modules>
     ,
     <properties>
