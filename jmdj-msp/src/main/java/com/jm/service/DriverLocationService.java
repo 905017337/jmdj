@@ -1,6 +1,7 @@
 package com.jm.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,4 +19,7 @@ public interface DriverLocationService {
                                               double endPlaceLongitude,
                                               double mileage);
 
+    void updateOrderLocationCache(Map param);
+
+    HashMap searchOrderLocationCache(Long orderId);
 }

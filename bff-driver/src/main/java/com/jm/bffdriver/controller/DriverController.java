@@ -6,8 +6,10 @@ import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.map.MapUtil;
 import com.jm.bffdriver.controller.form.*;
+import com.jm.bffdriver.service.DriverLocationService;
 import com.jm.bffdriver.service.DriverService;
 import com.jm.bffdriver.service.MpsService;
+import com.jm.bffdriver.service.NewOrderMessageService;
 import com.jm.common.util.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,6 +34,11 @@ public class DriverController {
     @Resource
     private DriverService driverService;
 
+    @Resource
+    private DriverLocationService driverLocationService;
+
+    @Resource
+    private NewOrderMessageService newOrderMessageService;
     @Resource
     private MpsService mpsService;
 
@@ -134,6 +141,38 @@ public class DriverController {
         long driverId = StpUtil.getLoginIdAsLong();
         form.setDriverId(driverId);
         mpsService.removeLocationCache(form);
+        return R.ok();
+    }
+
+    @PostMapping("/startWork")
+    @Operation(summary = "开始接单")
+    @SaCheckLogin
+    public R startWork(){
+        long driverId = StpUtil.getLoginIdAsLong();
+        RemoveLocationCacheForm form_1=new RemoveLocationCacheForm();
+        form_1.setDriverId(driverId);
+        driverLocationService.removeLocationCache(form_1);
+
+        ClearNewOrderQueueForm form_2=new ClearNewOrderQueueForm();
+        form_2.setUserId(driverId);
+        newOrderMessageService.clearNewOrderQueue(form_2);
+
+        return R.ok();
+    }
+
+    @PostMapping("/stopWork")
+    @Operation(summary = "停止接单")
+    @SaCheckLogin
+    public R stopWork(){
+        long driverId = StpUtil.getLoginIdAsLong();
+        RemoveLocationCacheForm form_1=new RemoveLocationCacheForm();
+        form_1.setDriverId(driverId);
+        driverLocationService.removeLocationCache(form_1);
+
+        ClearNewOrderQueueForm form_2=new ClearNewOrderQueueForm();
+        form_2.setUserId(driverId);
+        newOrderMessageService.clearNewOrderQueue(form_2);
+
         return R.ok();
     }
 }

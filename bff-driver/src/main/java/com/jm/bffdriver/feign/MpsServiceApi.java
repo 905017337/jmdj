@@ -2,6 +2,7 @@ package com.jm.bffdriver.feign;
 
 import com.jm.bffdriver.controller.form.RemoveLocationCacheForm;
 import com.jm.bffdriver.controller.form.UpdateLocationCacheForm;
+import com.jm.bffdriver.controller.form.UpdateOrderLocationCacheForm;
 import com.jm.common.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,4 +20,7 @@ public interface MpsServiceApi {
     @PostMapping("/driver/location/removeLocationCache")
     R removeLocationCache(RemoveLocationCacheForm form);
 
+
+    @PostMapping("/driver/location/updateOrderLocationCache")
+    void updateOrderLocationCache(UpdateOrderLocationCacheForm form);
 }

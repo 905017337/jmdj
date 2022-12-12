@@ -40,7 +40,6 @@ public class UserController {
 
     @GetMapping("/")
     public String test(){
-        System.out.println("访问正常");
         return "访问正常";
     }
     @PostMapping("/login")

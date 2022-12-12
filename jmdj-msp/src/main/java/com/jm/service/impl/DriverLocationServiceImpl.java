@@ -89,7 +89,7 @@ public class DriverLocationServiceImpl implements DriverLocationService {
 
         Point point = new Point(Convert.toDouble(startPlaceLongitude), Convert.toDouble(startPlaceLatitude));
         Metric metric = RedisGeoCommands.DistanceUnit.KILOMETERS;
-        Distance distancecircle = new Distance(5, metric);
+        Distance distancecircle = new Distance(30, metric);
          Circle circle = new Circle(point, distancecircle);
 
         RedisGeoCommands.GeoRadiusCommandArgs args = RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs()
@@ -164,5 +164,30 @@ public class DriverLocationServiceImpl implements DriverLocationService {
             }
         }
         return arrayList;
+    }
+
+    @Override
+    public void updateOrderLocationCache(Map param) {
+        long orderId = MapUtil.getLong(param, "orderId");
+        String latitude = MapUtil.getStr(param, "latitude");
+        String longitude = MapUtil.getStr(param, "longitude");
+        String location=latitude+"#"+longitude;
+        redisTemplate.opsForValue().set("order_location#"+orderId,location,10,TimeUnit.MINUTES);
+    }
+
+    @Override
+    public HashMap searchOrderLocationCache(Long orderId) {
+        Object obj = redisTemplate.opsForValue().get("order_location#" + orderId);
+        if(obj!=null){
+            String[] temp = obj.toString().split("#");
+            String latitude = temp[0];
+            String longitude = temp[1];
+            HashMap map=new HashMap(){{
+                put("latitude",latitude);
+                put("longitude",longitude);
+            }};
+            return map;
+        }
+        return null;
     }
 }

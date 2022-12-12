@@ -2,9 +2,7 @@ package com.jm.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.jm.common.util.R;
-import com.jm.controller.form.RemoveLocationCacheForm;
-import com.jm.controller.form.SearchBefittingDriverAboutOrderForm;
-import com.jm.controller.form.UpdateLocationCacheForm;
+import com.jm.controller.form.*;
 import com.jm.service.DriverLocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -61,4 +60,18 @@ public class DriverLocationController {
 
     }
 
+    @PostMapping("/updateOrderLocationCache")
+    @Operation(summary = "更新订单定位缓存")
+    public R updateOrderLocationCache(@RequestBody @Valid UpdateOrderLocationCacheForm form){
+        Map param = BeanUtil.beanToMap(form);
+        driverLocationService.updateOrderLocationCache(param);
+        return R.ok();
+    }
+
+    @PostMapping("/searchOrderLocationCache")
+    @Operation(summary = "查询订单定位缓存")
+    public R searchOrderLocationCache(@RequestBody @Valid SearchOrderLocationCacheForm form){
+        HashMap map = driverLocationService.searchOrderLocationCache(form.getOrderId());
+        return R.ok().put("result",map);
+    }
 }

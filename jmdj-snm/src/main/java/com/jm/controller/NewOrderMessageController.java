@@ -1,6 +1,7 @@
 package com.jm.controller;
 
 import com.jm.common.util.R;
+import com.jm.controller.from.ClearNewOrderQueueForm;
 import com.jm.controller.from.DeleteNewOrderQueueForm;
 import com.jm.controller.from.ReceiveNewOrderMessageForm;
 import com.jm.controller.from.SendNewOrderMessageForm;
@@ -90,11 +91,25 @@ public class NewOrderMessageController {
 
     }
 
-//    @PostMapping("/deleteNewOrderQueue")
-//    @Operation(summary = "同步删除新订单消息队列")
-//    public R deleteNewOrderQueue(@RequestBody @Valid DeleteNewOrderQueueForm form){
-//        task.deleteNewOrderQueue(form.getUserId());
-//
-//    }
+    @PostMapping("/deleteNewOrderQueue")
+    @Operation(summary = "同步删除新订单消息队列")
+    public R deleteNewOrderQueue(@RequestBody @Valid DeleteNewOrderQueueForm form){
+        task.deleteNewOrderQueue(form.getUserId());
+        return R.ok();
+    }
+
+    @PostMapping("/clearNewOrderQueue")
+    @Operation(summary = "同步清空新订单消息队列")
+    public R clearNewOrderQueue(@RequestBody @Valid ClearNewOrderQueueForm form) {
+        task.clearNewOrderQueue(form.getUserId());
+        return R.ok();
+    }
+
+    @PostMapping("/clearNewOrderQueueAsync")
+    @Operation(summary = "异步清空新订单消息队列")
+    public R clearNewOrderQueueAsync(@RequestBody @Valid ClearNewOrderQueueForm form) {
+        task.clearNewOrderQueueAsync(form.getUserId());
+        return R.ok();
+    }
 
 }

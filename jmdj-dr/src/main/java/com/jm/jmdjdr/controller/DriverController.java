@@ -58,6 +58,7 @@ public class DriverController {
     @PostMapping("/login")
     @Operation(summary = "登录系统")
     public R login(@RequestBody  LoginForm form){
+        log.info("登录系统");
         HashMap map = driverService.login(form.getCode());
         return R.ok().put("result",map);
     }

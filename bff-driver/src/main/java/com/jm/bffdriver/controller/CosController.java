@@ -29,7 +29,6 @@ public class CosController {
 
     @PostMapping("/test")
     public R test(){
-        System.out.println("--------");
         return R.ok("====");
     }
 

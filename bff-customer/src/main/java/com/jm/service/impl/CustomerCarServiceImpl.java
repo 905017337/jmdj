@@ -27,7 +27,6 @@ public class CustomerCarServiceImpl implements CustomerCarService {
     @Transactional
     @LcnTransaction
     public void insertCustomerCar(InsertCustomerCarForm form) {
-        System.out.println(form.toString());
         cstServiceApi.insertCustomerCar(form);
     }
 

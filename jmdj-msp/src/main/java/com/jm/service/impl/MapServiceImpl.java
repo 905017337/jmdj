@@ -47,7 +47,6 @@ public class MapServiceImpl implements MapService {
         JSONObject json = JSONUtil.parseObj(resp.body());
         Integer status = json.getInt("status");
         String message = json.getStr("message");
-        System.out.println(message);
         if(status != 0){
             log.error(message);
             throw new HxdsException("预估历程异常"+message);
