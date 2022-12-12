@@ -3,6 +3,7 @@ package com.jm.jmdjodr.mapper;
 import com.jm.jmdjodr.pojo.OrderEntity;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author caozhenhao
@@ -17,4 +18,5 @@ public interface OrderMapper {
 
     HashMap searchDriverTodayBusinessData(long driverId);
 
+    int acceptNewOrder(Map param);
 }

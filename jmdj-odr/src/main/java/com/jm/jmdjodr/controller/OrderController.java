@@ -2,6 +2,7 @@ package com.jm.jmdjodr.controller;
 
 import cn.hutool.json.JSONObject;
 import com.jm.common.util.R;
+import com.jm.jmdjodr.controller.form.AcceptNewOrderForm;
 import com.jm.jmdjodr.controller.form.InsertOrderForm;
 import com.jm.jmdjodr.controller.form.SearchDriverTodayBusinessDataForm;
 import com.jm.jmdjodr.pojo.OrderBillEntity;
@@ -73,5 +74,12 @@ public class OrderController {
 
         String id = orderService.insertOrder(orderEntity, billEntity);
         return R.ok().put("result",id);
+    }
+
+    @PostMapping("/acceptNewOrder")
+    @Operation(summary = "司机接单")
+    public R acceptNewOrder(@RequestBody @Valid AcceptNewOrderForm form){
+        String result = orderService.acceptNewOrder(form.getDriverId(),form.getOrderId());
+        return R.ok().put("result",result);
     }
 }

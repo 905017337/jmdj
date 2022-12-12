@@ -1,5 +1,6 @@
 package com.jm.bffdriver.feign;
 
+import com.jm.bffdriver.controller.form.AcceptNewOrderForm;
 import com.jm.bffdriver.controller.form.SearchDriverTodayBusinessDataForm;
 import com.jm.common.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,4 +16,7 @@ public interface OdrServiceApi {
 
     @PostMapping("/order/searchDriverTodayBusinessData")
     R searchDriverTodayBusinessData(SearchDriverTodayBusinessDataForm form);
+
+    @PostMapping("/order/accpetNewOrder")
+    R acceptNewOrder(AcceptNewOrderForm form);
 }

@@ -7,12 +7,16 @@ import com.jm.jmdjodr.mapper.OrderMapper;
 import com.jm.jmdjodr.pojo.OrderBillEntity;
 import com.jm.jmdjodr.pojo.OrderEntity;
 import com.jm.jmdjodr.service.OrderService;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -54,6 +58,42 @@ public class OrderServiceImpl implements OrderService {
         }else {
             throw new HxdsException("保存新订单失败");
         }
+    }
+
+    @Override
+    @Transactional
+    @LcnTransaction
+    public String acceptNewOrder(long driverId,long orderId) {
+        //Redis 不存在抢单的新订单就代表抢单失败
+        if(!redisTemplate.hasKey("order#"+orderId)){
+            return "抢单失败";
+        }
+        //执行redis事务
+        redisTemplate.execute(new SessionCallback() {
+            @Override
+            public Object execute(RedisOperations redisOperations) throws DataAccessException {
+                //获取新订单的version
+                redisOperations.watch("order#"+orderId);
+                //本地缓存redis操作
+                redisOperations.multi();
+                //把新订单缓存的value设置成抢单司机的id
+                redisOperations.opsForValue().set("order#"+orderId,driverId);
+                //执行Redis事务，如果事务提交失败回自动抛出异常
+                return redisOperations.exec();
+            }
+        });
+        //抢单成功后，删除Redis中的新订单，避免让其他司机参与抢单
+        redisTemplate.delete("order#"+orderId);
+        //更新订单记录，或添加上接单司机ID和接单时间
+        HashMap param = new HashMap(){{
+            put("driverId",driverId);
+            put("orderId",orderId);
+        }};
+        int rows = orderMapper.acceptNewOrder(param);
+        if(rows != 1){
+            throw new HxdsException("接单失败，无法更新订单记录");
+        }
+        return "接单成功";
     }
 
 
