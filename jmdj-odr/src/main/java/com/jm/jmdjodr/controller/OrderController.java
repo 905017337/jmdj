@@ -1,9 +1,11 @@
 package com.jm.jmdjodr.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONObject;
 import com.jm.common.util.R;
 import com.jm.jmdjodr.controller.form.AcceptNewOrderForm;
 import com.jm.jmdjodr.controller.form.InsertOrderForm;
+import com.jm.jmdjodr.controller.form.SearchDriverExecuteOrderForm;
 import com.jm.jmdjodr.controller.form.SearchDriverTodayBusinessDataForm;
 import com.jm.jmdjodr.pojo.OrderBillEntity;
 import com.jm.jmdjodr.pojo.OrderEntity;
@@ -16,6 +18,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author caozhenhao
@@ -76,10 +79,18 @@ public class OrderController {
         return R.ok().put("result",id);
     }
 
-    @PostMapping("/acceptNewOrder")
+    @PostMapping("/accpetNewOrder")
     @Operation(summary = "司机接单")
     public R acceptNewOrder(@RequestBody @Valid AcceptNewOrderForm form){
         String result = orderService.acceptNewOrder(form.getDriverId(),form.getOrderId());
+        return R.ok().put("result",result);
+    }
+
+    @PostMapping("/searchDriverExecuteOrder")
+    @Operation(summary = "查询司机正在执行的订单记录")
+    public R searchDriverExecuteOrder(@RequestBody @Valid SearchDriverExecuteOrderForm form){
+        Map param = BeanUtil.beanToMap(form);
+        HashMap result = orderService.searchDriverExecuteOrder(param);
         return R.ok().put("result",result);
     }
 }

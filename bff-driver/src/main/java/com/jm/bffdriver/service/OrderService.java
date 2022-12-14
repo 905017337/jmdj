@@ -1,6 +1,9 @@
 package com.jm.bffdriver.service;
 
 import com.jm.bffdriver.controller.form.AcceptNewOrderForm;
+import com.jm.bffdriver.controller.form.SearchDriverExecuteOrderForm;
+
+import java.util.HashMap;
 
 /**
  * @author caozhenhao
@@ -10,4 +13,6 @@ import com.jm.bffdriver.controller.form.AcceptNewOrderForm;
 public interface OrderService {
 
     String acceptNewOrder(AcceptNewOrderForm form);
+
+    HashMap searchDriverExecuteOrder(SearchDriverExecuteOrderForm form);
 }

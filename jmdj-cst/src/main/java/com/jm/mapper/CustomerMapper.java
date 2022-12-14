@@ -20,4 +20,6 @@ public interface CustomerMapper {
     String searchCustomerId(String openId);
 
     String login(String openId);
+
+    HashMap searchCustomerInfoInOrder(long customerId);
 }

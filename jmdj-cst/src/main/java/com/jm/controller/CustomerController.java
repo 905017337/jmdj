@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.jm.common.util.R;
 import com.jm.controller.form.LoginForm;
 import com.jm.controller.form.RegisterNewCustomerForm;
+import com.jm.controller.form.SearchCustomerInfoInOrderForm;
 import com.jm.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -42,5 +44,12 @@ public class CustomerController {
     public R login(@RequestBody @Valid LoginForm form) {
         String userId = customerService.login(form.getCode());
         return R.ok().put("userId", userId);
+    }
+
+    @PostMapping("/searchCustomerInfoInOrder")
+    @Operation(summary = "查询订单中客户的信息")
+    public R searchCustomerInfoInOrder(@RequestBody @Valid SearchCustomerInfoInOrderForm form){
+        HashMap result = customerService.searchCustomerInfoInOrder(form.getCustomerId());
+        return R.ok().put("result",result);
     }
 }

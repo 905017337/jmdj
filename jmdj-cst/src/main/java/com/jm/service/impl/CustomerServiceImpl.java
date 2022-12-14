@@ -53,4 +53,10 @@ public class CustomerServiceImpl implements CustomerService {
         customerId = (customerId != null ? customerId : "");
         return customerId;
     }
+
+    @Override
+    public HashMap searchCustomerInfoInOrder(long customerId) {
+        HashMap map = customerMapper.searchCustomerInfoInOrder(customerId);
+        return map;
+    }
 }

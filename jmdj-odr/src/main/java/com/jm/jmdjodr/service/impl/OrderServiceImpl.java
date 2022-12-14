@@ -96,6 +96,12 @@ public class OrderServiceImpl implements OrderService {
         return "接单成功";
     }
 
+    @Override
+    public HashMap searchDriverExecuteOrder(Map param) {
+        final HashMap map = orderMapper.searchDriverExecuteOrder(param);
+        return map;
+    }
+
 
     @Override
     public HashMap searchDriverTodayBusinessData(long driverId){

@@ -19,4 +19,6 @@ public interface OrderMapper {
     HashMap searchDriverTodayBusinessData(long driverId);
 
     int acceptNewOrder(Map param);
+
+    HashMap searchDriverExecuteOrder(Map param);
 }

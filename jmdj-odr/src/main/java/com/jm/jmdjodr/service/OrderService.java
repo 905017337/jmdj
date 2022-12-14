@@ -18,4 +18,6 @@ public interface OrderService {
     String insertOrder(OrderEntity orderEntity, OrderBillEntity orderBillEntity);
 
     String acceptNewOrder(long driverId,long orderId);
+
+    HashMap searchDriverExecuteOrder(Map param);
 }

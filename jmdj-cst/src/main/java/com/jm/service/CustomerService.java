@@ -1,5 +1,6 @@
 package com.jm.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,4 +13,6 @@ public interface CustomerService {
     String registerNewCustomer(Map param);
 
     String login(String code);
+
+    HashMap searchCustomerInfoInOrder(long customerId);
 }
