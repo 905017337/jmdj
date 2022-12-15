@@ -3,10 +3,7 @@ package com.jm.jmdjodr.controller;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONObject;
 import com.jm.common.util.R;
-import com.jm.jmdjodr.controller.form.AcceptNewOrderForm;
-import com.jm.jmdjodr.controller.form.InsertOrderForm;
-import com.jm.jmdjodr.controller.form.SearchDriverExecuteOrderForm;
-import com.jm.jmdjodr.controller.form.SearchDriverTodayBusinessDataForm;
+import com.jm.jmdjodr.controller.form.*;
 import com.jm.jmdjodr.pojo.OrderBillEntity;
 import com.jm.jmdjodr.pojo.OrderEntity;
 import com.jm.jmdjodr.service.OrderService;
@@ -91,6 +88,22 @@ public class OrderController {
     public R searchDriverExecuteOrder(@RequestBody @Valid SearchDriverExecuteOrderForm form){
         Map param = BeanUtil.beanToMap(form);
         HashMap result = orderService.searchDriverExecuteOrder(param);
+        return R.ok().put("result",result);
+    }
+
+    @PostMapping("/searchOrderStatus")
+    @Operation(summary = "查询订单状态")
+    public R searchOrderStatus(@RequestBody @Valid SearchOrderStatusForm form){
+        Map param = BeanUtil.beanToMap(form);
+        Integer status = orderService.searchOrderStatus(param);
+        return R.ok().put("result",status);
+    }
+
+    @PostMapping("/deleteUnAcceptOrder")
+    @Operation(summary = "删除没有司机接单的订单")
+    public R deleteUnAcceptOrder(@RequestBody @Valid DeleteUnAcceptOrderForm form){
+        Map param = BeanUtil.beanToMap(form);
+        String result = orderService.deleteUnAcceptOrder(param);
         return R.ok().put("result",result);
     }
 }

@@ -20,4 +20,8 @@ public interface OrderService {
     String acceptNewOrder(long driverId,long orderId);
 
     HashMap searchDriverExecuteOrder(Map param);
+
+    Integer searchOrderStatus(Map param);
+
+    String deleteUnAcceptOrder(Map param);
 }

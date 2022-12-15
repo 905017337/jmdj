@@ -147,4 +147,18 @@ public class OrderServiceImpl implements OrderService {
 
         return result;
     }
+
+    @Override
+    public Integer searchOrderStatus(SearchOrderStatusForm form) {
+        R r = odrServiceApi.searchOrderStatus(form);
+        Integer status = MapUtil.getInt(r,"result");
+        return status;
+    }
+
+    @Override
+    public String deleteUnAcceptOrder(DeleteUnAcceptOrderForm form) {
+        R r = odrServiceApi.deleteUnAcceptOrder(form);
+        String result = MapUtil.getStr(r,"result");
+        return result;
+    }
 }

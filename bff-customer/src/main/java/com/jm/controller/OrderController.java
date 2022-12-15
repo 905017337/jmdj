@@ -4,6 +4,8 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
 import com.jm.common.util.R;
 import com.jm.controller.form.CreateNewOrderForm;
+import com.jm.controller.form.DeleteUnAcceptOrderForm;
+import com.jm.controller.form.SearchOrderStatusForm;
 import com.jm.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,5 +39,26 @@ public class OrderController {
         form.setCustomerId(customerId);
          HashMap result = orderService.createNewOrder(form);
          return R.ok().put("result",result);
+    }
+
+    @PostMapping("/searchOrderStatus")
+    @Operation(summary = "查询订单状态")
+    @SaCheckLogin
+    public R searchOrderStatus(@RequestBody @Valid SearchOrderStatusForm form){
+        long customerId = StpUtil.getLoginIdAsLong();
+        form.setCustomerId(customerId);
+        Integer status = orderService.searchOrderStatus(form);
+        return R.ok().put("result",status);
+    }
+
+    @PostMapping("/deleteUnAcceptOrder")
+    @Operation(summary = "关闭没有司机接单的订单")
+    @SaCheckLogin
+    public R DeleteUnAcceptOrder(@RequestBody @Valid DeleteUnAcceptOrderForm form){
+        long customerId = StpUtil.getLoginIdAsLong();
+        form.setCustomerId(customerId);
+        String result = orderService.deleteUnAcceptOrder(form);
+        return R.ok().put("reuslt",result);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.jm.jmdjodr.service.impl;
 
+import cn.hutool.core.map.MapUtil;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jm.common.exception.HxdsException;
 import com.jm.jmdjodr.mapper.OrderBillMapper;
@@ -50,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
             if(rows == 1){
                 //往redis里面插入缓存，配合redis事务用于司机抢单，避免多个司机同时抢单成功
                 redisTemplate.opsForValue().set("order#"+id,"none");
-                redisTemplate.expire("order#"+id,15, TimeUnit.MINUTES); //缓存15分钟
+                redisTemplate.expire("order#"+id,16, TimeUnit.MINUTES); //缓存15分钟
                 return id;
             }else {
                 throw new HxdsException("保存新订单费用失败");
@@ -100,6 +101,42 @@ public class OrderServiceImpl implements OrderService {
     public HashMap searchDriverExecuteOrder(Map param) {
         final HashMap map = orderMapper.searchDriverExecuteOrder(param);
         return map;
+    }
+
+    @Override
+    public Integer searchOrderStatus(Map param) {
+        Integer status = orderMapper.searchOrderStatus(param);
+        if(status == null){
+            throw new HxdsException("没有查到数据，请核对查询条件");
+        }
+        return status;
+    }
+
+    @Override
+    @Transactional
+    @LcnTransaction
+    public String deleteUnAcceptOrder(Map param) {
+        long orderId = MapUtil.getLong(param,"orderId");
+        if(!redisTemplate.hasKey("order#+orderId")){
+            return "订单取消失败";
+        }
+        redisTemplate.execute(new SessionCallback() {
+            @Override
+            public Object execute(RedisOperations redisOperations) throws DataAccessException {
+                redisOperations.watch("order#"+orderId);
+                redisOperations.multi();
+                redisOperations.opsForValue().set("order#"+orderId,"none");
+                return redisOperations.exec();
+            }
+        });
+
+        redisTemplate.delete("order#"+orderId);
+        int rows = orderMapper.deleteUnAcceptOrder(param);
+        if(rows != 1){
+            return "订单取消失败";
+        }
+
+        return "订单取消成功";
     }
 
 
