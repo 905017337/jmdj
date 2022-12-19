@@ -106,4 +106,12 @@ public class OrderController {
         String result = orderService.deleteUnAcceptOrder(param);
         return R.ok().put("result",result);
     }
+
+    @PostMapping("/searchDriverCurrentOrder")
+    @Operation(summary = "查询司机当前订单")
+    public R searchDriverCurrentOrder(@RequestBody @Valid SearchDriverCurrentOrderForm form){
+        HashMap map = orderService.searchDriverCurrentOrder(form.getDriverId());
+        return R.ok().put("result",map);
+    }
+
 }

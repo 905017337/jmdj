@@ -24,4 +24,6 @@ public interface OrderService {
     Integer searchOrderStatus(Map param);
 
     String deleteUnAcceptOrder(Map param);
+
+    HashMap searchDriverCurrentOrder(long driverId);
 }

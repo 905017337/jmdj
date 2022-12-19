@@ -117,7 +117,7 @@ public class OrderServiceImpl implements OrderService {
     @LcnTransaction
     public String deleteUnAcceptOrder(Map param) {
         long orderId = MapUtil.getLong(param,"orderId");
-        if(!redisTemplate.hasKey("order#+orderId")){
+        if(!redisTemplate.hasKey("order#"+orderId)){
             return "订单取消失败";
         }
         redisTemplate.execute(new SessionCallback() {
@@ -137,6 +137,12 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return "订单取消成功";
+    }
+
+    @Override
+    public HashMap searchDriverCurrentOrder(long driverId) {
+        HashMap map = orderMapper.searchDriverCurrentOrder(driverId);
+        return map;
     }
 
 

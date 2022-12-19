@@ -3,6 +3,7 @@ package com.jm.bffdriver.controller;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
 import com.jm.bffdriver.controller.form.AcceptNewOrderForm;
+import com.jm.bffdriver.controller.form.SearchDriverCurrentOrderForm;
 import com.jm.bffdriver.controller.form.SearchDriverExecuteOrderForm;
 import com.jm.bffdriver.service.OrderService;
 import com.jm.common.util.R;
@@ -48,4 +49,17 @@ public class OrderControllere {
         HashMap map = orderService.searchDriverExecuteOrder(form);
         return R.ok().put("result",map);
     }
+
+    @PostMapping("/searchDrvierCurrentOrder")
+    @SaCheckLogin
+    @Operation(summary = "查询司机当前订单")
+    public R searchDriverCurrentOrder(){
+        long driverId = StpUtil.getLoginIdAsLong();
+        SearchDriverCurrentOrderForm form = new SearchDriverCurrentOrderForm();
+        form.setDriverId(driverId);
+        HashMap map = orderService.searchDriverCurrentOrder(form);
+        return R.ok().put("result",map);
+    }
+
+
 }

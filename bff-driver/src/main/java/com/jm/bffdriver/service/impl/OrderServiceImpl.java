@@ -4,6 +4,7 @@ import cn.hutool.core.map.MapUtil;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jm.bffdriver.controller.form.AcceptNewOrderForm;
 import com.jm.bffdriver.controller.form.SearchCustomerInfoInOrderForm;
+import com.jm.bffdriver.controller.form.SearchDriverCurrentOrderForm;
 import com.jm.bffdriver.controller.form.SearchDriverExecuteOrderForm;
 import com.jm.bffdriver.feign.CstServiceApi;
 import com.jm.bffdriver.feign.OdrServiceApi;
@@ -55,5 +56,25 @@ public class OrderServiceImpl implements OrderService {
         map.putAll(orderMap);
         map.putAll(cstMap);
         return  map;
+    }
+
+    @Override
+    public HashMap searchDriverCurrentOrder(SearchDriverCurrentOrderForm form) {
+        R r = odrServiceApi.searchDriverCurrentOrder(form);
+        HashMap orderMap = (HashMap)r.get("result");
+
+        if(MapUtil.isNotEmpty(orderMap)){
+            HashMap<Object, Object> map = new HashMap<>();
+            //查询代驾客户信息
+            long customerId = MapUtil.getLong(orderMap,"customerId");
+            SearchCustomerInfoInOrderForm inOrderForm = new SearchCustomerInfoInOrderForm();
+            inOrderForm.setCustomerId(customerId);
+            r = cstServiceApi.searchCustomerInfoInOrder(inOrderForm);
+            HashMap cstMap = (HashMap) r.get("result");
+            map.putAll(orderMap);
+            map.putAll(cstMap);
+            return map;
+        }
+        return null;
     }
 }

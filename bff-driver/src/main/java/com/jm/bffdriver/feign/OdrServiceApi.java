@@ -1,6 +1,7 @@
 package com.jm.bffdriver.feign;
 
 import com.jm.bffdriver.controller.form.AcceptNewOrderForm;
+import com.jm.bffdriver.controller.form.SearchDriverCurrentOrderForm;
 import com.jm.bffdriver.controller.form.SearchDriverExecuteOrderForm;
 import com.jm.bffdriver.controller.form.SearchDriverTodayBusinessDataForm;
 import com.jm.common.util.R;
@@ -23,4 +24,7 @@ public interface OdrServiceApi {
 
     @PostMapping("/order/searchDriverExecuteOrder")
     R searchDriverExecuteOrder(SearchDriverExecuteOrderForm form);
+
+    @PostMapping("/order/searchDriverCurrentOrder")
+    R searchDriverCurrentOrder(SearchDriverCurrentOrderForm form);
 }
