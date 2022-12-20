@@ -107,8 +107,10 @@ public class OrderServiceImpl implements OrderService {
     public Integer searchOrderStatus(Map param) {
         Integer status = orderMapper.searchOrderStatus(param);
         if(status == null){
-            throw new HxdsException("没有查到数据，请核对查询条件");
+//            throw new HxdsException("没有查到数据，请核对查询条件");
+            status = 0;
         }
+
         return status;
     }
 
@@ -135,13 +137,34 @@ public class OrderServiceImpl implements OrderService {
         if(rows != 1){
             return "订单取消失败";
         }
-
+        rows = orderBillMapper.deleteUnAcceptOrderBill(orderId);
+        if(rows != 1){
+            return "订单取消成功";
+        }
         return "订单取消成功";
     }
 
     @Override
     public HashMap searchDriverCurrentOrder(long driverId) {
         HashMap map = orderMapper.searchDriverCurrentOrder(driverId);
+        return map;
+    }
+
+    @Override
+    public HashMap hasCustomerCurrentOrder(long customerId) {
+        HashMap result = new HashMap<>();
+        HashMap map = orderMapper.hasCustomerUnAcceptOrder(customerId);
+        result.put("hasCustomerUnAcceptOrder",map != null);
+        result.put("unAcceptOrder",map);
+        Long id = orderMapper.hasCustomerUnFinishedOrder(customerId);
+        result.put("hasCustomerUnFinishedOrder",id != null);
+        result.put("unFinishedOrder",id);
+        return result;
+    }
+
+    @Override
+    public HashMap searchOrderForMoveById(Map param) {
+        HashMap map = orderMapper.searchOrderForMoveById(param);
         return map;
     }
 

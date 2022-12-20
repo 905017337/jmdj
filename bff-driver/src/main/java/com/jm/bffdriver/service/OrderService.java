@@ -3,6 +3,7 @@ package com.jm.bffdriver.service;
 import com.jm.bffdriver.controller.form.AcceptNewOrderForm;
 import com.jm.bffdriver.controller.form.SearchDriverCurrentOrderForm;
 import com.jm.bffdriver.controller.form.SearchDriverExecuteOrderForm;
+import com.jm.bffdriver.controller.form.SearchOrderForMoveByIdForm;
 
 import java.util.HashMap;
 
@@ -18,4 +19,6 @@ public interface OrderService {
     HashMap searchDriverExecuteOrder(SearchDriverExecuteOrderForm form);
 
     HashMap searchDriverCurrentOrder(SearchDriverCurrentOrderForm form);
+
+    HashMap searchOrderForMoveById(SearchOrderForMoveByIdForm form);
 }

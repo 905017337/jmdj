@@ -27,4 +27,10 @@ public interface OrderMapper {
     int deleteUnAcceptOrder(Map param);
 
     HashMap searchDriverCurrentOrder(long driverId);
+
+    Long hasCustomerUnFinishedOrder(long customerId);
+
+    HashMap hasCustomerUnAcceptOrder(long customerId);
+
+    HashMap searchOrderForMoveById(Map param);
 }

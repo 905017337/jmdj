@@ -2,6 +2,7 @@ package com.jm.service;
 
 import com.jm.controller.form.CreateNewOrderForm;
 import com.jm.controller.form.DeleteUnAcceptOrderForm;
+import com.jm.controller.form.HasCustomerCurrentOrderForm;
 import com.jm.controller.form.SearchOrderStatusForm;
 
 import java.util.HashMap;
@@ -18,4 +19,6 @@ public interface OrderService {
     Integer searchOrderStatus(SearchOrderStatusForm form);
 
     String deleteUnAcceptOrder(DeleteUnAcceptOrderForm form);
+
+    HashMap hasCustomerCurrentOrder(HasCustomerCurrentOrderForm form);
 }

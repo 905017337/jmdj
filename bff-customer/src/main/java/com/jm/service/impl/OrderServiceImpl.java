@@ -10,6 +10,7 @@ import com.jm.feign.OdrServiceApi;
 import com.jm.feign.RuleServiceApi;
 import com.jm.feign.SnmServiceApi;
 import com.jm.service.OrderService;
+import jdk.security.jarsigner.JarSigner;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -160,5 +161,12 @@ public class OrderServiceImpl implements OrderService {
         R r = odrServiceApi.deleteUnAcceptOrder(form);
         String result = MapUtil.getStr(r,"result");
         return result;
+    }
+
+    @Override
+    public HashMap hasCustomerCurrentOrder(HasCustomerCurrentOrderForm form) {
+        R r = odrServiceApi.hasCustomerCurrentOrder(form);
+        HashMap map = (HashMap)r.get("result");
+        return map;
     }
 }

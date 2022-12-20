@@ -10,4 +10,6 @@ import com.jm.jmdjodr.pojo.OrderBillEntity;
 public interface OrderBillMapper {
 
     int insert(OrderBillEntity entity);
+
+    int deleteUnAcceptOrderBill(long orderId);
 }

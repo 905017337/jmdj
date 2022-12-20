@@ -5,6 +5,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.jm.common.util.R;
 import com.jm.controller.form.CreateNewOrderForm;
 import com.jm.controller.form.DeleteUnAcceptOrderForm;
+import com.jm.controller.form.HasCustomerCurrentOrderForm;
 import com.jm.controller.form.SearchOrderStatusForm;
 import com.jm.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,7 +59,17 @@ public class OrderController {
         long customerId = StpUtil.getLoginIdAsLong();
         form.setCustomerId(customerId);
         String result = orderService.deleteUnAcceptOrder(form);
-        return R.ok().put("reuslt",result);
+        return R.ok().put("result",result);
+    }
 
+    @PostMapping("/hasCustomerCurrentOrder")
+    @Operation(summary = "查询乘客是否存在当前的订单")
+    @SaCheckLogin
+    public R hasCustomerCurrentOrder(){
+        long customerId = StpUtil.getLoginIdAsLong();
+        HasCustomerCurrentOrderForm form = new HasCustomerCurrentOrderForm();
+        form.setCustomerId(customerId);
+        HashMap map = orderService.hasCustomerCurrentOrder(form);
+        return R.ok().put("result",map);
     }
 }

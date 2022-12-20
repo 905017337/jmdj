@@ -71,6 +71,7 @@
             AND customer_id = #{customerId}
         </if>
     </select>
+
     <select id="searchDriverCurrentOrder" parameterType="long" resultType="HashMap">
         SELECT CAST(id AS CHAR)                              AS id,
                customer_id                                   AS customerId,
@@ -99,4 +100,42 @@
             AND customer_id = #{customerId}
         </if>
     </delete>
+
+    <select id="hasCustomerUnFinishedOrder" parameterType="long" resultType="Long">
+        SELECT CAST(id AS CHAR) AS id
+        FROM tb_order
+        WHERE customer_id = #{customerId}
+          AND `status` IN (2, 3, 4) LIMIT 1;
+    </select>
+
+    <select id="hasCustomerUnAcceptOrder" parameterType="long" resultType="HashMap">
+        SELECT CAST(id AS CHAR)     AS id,
+               start_place          AS startPlace,
+               start_place_location AS startPlaceLocation,
+               end_place            AS endPlace,
+               end_place_location   AS endPlaceLocation,
+               car_plate            AS carPlate,
+               car_type             AS carType
+        FROM tb_order
+        WHERE customer_id = #{customerId}
+          AND `status` = 1 LIMIT 1;
+    </select>
+
+    <select id="searchOrderForMoveById" parameterType="Map" resultType="HashMap">
+        SELECT
+        start_place AS startPlace,
+        start_place_location AS startPlaceLocation,
+        end_place AS endPlace,
+        end_place_location AS endPlaceLocation,
+        `status`
+        FROM tb_order
+        WHERE id = #{orderId}
+        <if test="customerId!=null">
+            AND customer_id = #{customerId}
+        </if>
+        <if test="driverId!=null">
+            AND driver_id = #{driverId}
+        </if>
+        LIMIT 1;
+    </select>
 </mapper>

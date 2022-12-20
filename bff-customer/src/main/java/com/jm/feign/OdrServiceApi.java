@@ -2,6 +2,7 @@ package com.jm.feign;
 
 import com.jm.common.util.R;
 import com.jm.controller.form.DeleteUnAcceptOrderForm;
+import com.jm.controller.form.HasCustomerCurrentOrderForm;
 import com.jm.controller.form.InsertOrderForm;
 import com.jm.controller.form.SearchOrderStatusForm;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -23,4 +24,7 @@ public interface OdrServiceApi {
 
     @PostMapping("/order/deleteUnAcceptOrder")
     R deleteUnAcceptOrder(DeleteUnAcceptOrderForm form);
+
+    @PostMapping("/order/hasCustomerCurrentOrder")
+    R hasCustomerCurrentOrder(HasCustomerCurrentOrderForm form);
 }

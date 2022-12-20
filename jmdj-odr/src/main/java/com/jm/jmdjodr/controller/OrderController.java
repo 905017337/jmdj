@@ -114,4 +114,20 @@ public class OrderController {
         return R.ok().put("result",map);
     }
 
+    @PostMapping("/hasCustomerCurrentOrder")
+    @Operation(summary = "查询乘客是否存在当前的订单")
+    public R hasCustomerCurrentOrder(@RequestBody @Valid HasCustomerCurrentOrderForm form){
+        HashMap map = orderService.hasCustomerCurrentOrder(form.getCustomerId());
+        return R.ok().put("result",map);
+
+    }
+
+    @PostMapping("/searchOrderForMoveById")
+    @Operation(summary = "查询司机司乘同显数据")
+    public R searchOrderForMoveById(@RequestBody @Valid SearchOrderForMoveByIdForm form){
+        Map param = BeanUtil.beanToMap(form);
+        HashMap map = orderService.searchOrderForMoveById(param);
+        return R.ok().put("result",map);
+    }
+
 }

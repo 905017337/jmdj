@@ -2,10 +2,7 @@ package com.jm.bffdriver.service.impl;
 
 import cn.hutool.core.map.MapUtil;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
-import com.jm.bffdriver.controller.form.AcceptNewOrderForm;
-import com.jm.bffdriver.controller.form.SearchCustomerInfoInOrderForm;
-import com.jm.bffdriver.controller.form.SearchDriverCurrentOrderForm;
-import com.jm.bffdriver.controller.form.SearchDriverExecuteOrderForm;
+import com.jm.bffdriver.controller.form.*;
 import com.jm.bffdriver.feign.CstServiceApi;
 import com.jm.bffdriver.feign.OdrServiceApi;
 import com.jm.bffdriver.service.OrderService;
@@ -76,5 +73,12 @@ public class OrderServiceImpl implements OrderService {
             return map;
         }
         return null;
+    }
+
+    @Override
+    public HashMap searchOrderForMoveById(SearchOrderForMoveByIdForm form) {
+        R r = odrServiceApi.searchOrderForMoveById(form);
+        HashMap map = (HashMap) r.get("result");
+        return map;
     }
 }

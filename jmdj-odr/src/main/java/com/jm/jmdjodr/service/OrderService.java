@@ -26,4 +26,8 @@ public interface OrderService {
     String deleteUnAcceptOrder(Map param);
 
     HashMap searchDriverCurrentOrder(long driverId);
+
+    HashMap hasCustomerCurrentOrder(long customerId);
+
+    HashMap searchOrderForMoveById(Map param);
 }
