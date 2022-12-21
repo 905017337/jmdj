@@ -125,15 +125,15 @@ public class DriverController {
 
 
 
-    @PostMapping("/location/updateLocationCache")
-    @Operation(summary = "更新司机的实时位置")
-    public R updateLocationCache(@RequestBody @Valid UpdateLocationCacheForm form){
-
-        long driverId = StpUtil.getLoginIdAsLong();
-        form.setDriverId(driverId);
-        mpsService.updateLocationCache(form);
-        return R.ok();
-    }
+//    @PostMapping("/location/updateLocationCache")
+//    @Operation(summary = "更新司机的实时位置")
+//    public R updateLocationCache(@RequestBody @Valid UpdateLocationCacheForm form){
+//
+//        long driverId = StpUtil.getLoginIdAsLong();
+//        form.setDriverId(driverId);
+//        mpsService.updateLocationCache(form);
+//        return R.ok();
+//    }
 
     @PostMapping("/location/removeLocationCache")
     @Operation(summary = "删除司机的位置")

@@ -5,7 +5,7 @@ server:
       selectors: 8
   port: 8004
   servlet:
-    context-path: /
+    context-path: /SearchOrderLocationCacheForm
 
 spring:
   profiles:

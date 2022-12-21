@@ -11,9 +11,9 @@ import com.jm.bffdriver.controller.form.UpdateOrderLocationCacheForm;
  */
 public interface DriverLocationService {
 
-    public void updateLocationCache(UpdateLocationCacheForm form);
+    void updateLocationCache(UpdateLocationCacheForm form);
 
-    public void removeLocationCache(RemoveLocationCacheForm form);
+    void removeLocationCache(RemoveLocationCacheForm form);
 
-    public void updateOrderLocationCache(UpdateOrderLocationCacheForm form);
+    void updateOrderLocationCache(UpdateOrderLocationCacheForm form);
 }

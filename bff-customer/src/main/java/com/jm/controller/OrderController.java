@@ -3,10 +3,7 @@ package com.jm.controller;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
 import com.jm.common.util.R;
-import com.jm.controller.form.CreateNewOrderForm;
-import com.jm.controller.form.DeleteUnAcceptOrderForm;
-import com.jm.controller.form.HasCustomerCurrentOrderForm;
-import com.jm.controller.form.SearchOrderStatusForm;
+import com.jm.controller.form.*;
 import com.jm.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -71,5 +68,15 @@ public class OrderController {
         form.setCustomerId(customerId);
         HashMap map = orderService.hasCustomerCurrentOrder(form);
         return R.ok().put("result",map);
+    }
+
+    @PostMapping("/searchOrderForMoveById")
+    @SaCheckLogin
+    @Operation(summary = "查询订单信息用于司乘同显功能")
+    public R searchOrderForMoveById(@RequestBody @Valid SearchOrderForMoveByIdForm form) {
+        long customerId = StpUtil.getLoginIdAsLong();
+        form.setCustomerId(customerId);
+        HashMap map = orderService.searchOrderForMoveById(form);
+        return R.ok().put("result", map);
     }
 }
