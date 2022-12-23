@@ -21,6 +21,7 @@
         <module>jmdj-cst</module>
         <module>jmdj-rule</module>
         <module>jmdj-snm</module>
+        <module>jmdj-nebula</module>
     </modules>
     ,
     <properties>
