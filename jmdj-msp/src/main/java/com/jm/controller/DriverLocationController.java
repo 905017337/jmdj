@@ -74,4 +74,5 @@ public class DriverLocationController {
         HashMap map = driverLocationService.searchOrderLocationCache(form.getOrderId());
         return R.ok().put("result",map);
     }
+
 }

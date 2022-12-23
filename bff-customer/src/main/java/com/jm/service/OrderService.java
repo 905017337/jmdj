@@ -20,4 +20,7 @@ public interface OrderService {
     HashMap hasCustomerCurrentOrder(HasCustomerCurrentOrderForm form);
 
     HashMap searchOrderForMoveById(SearchOrderForMoveByIdForm form);
+
+    boolean confirmArriveStartPlace(ConfirmArriveStartPlaceForm form);
+
 }

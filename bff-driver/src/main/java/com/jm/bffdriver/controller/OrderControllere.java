@@ -2,10 +2,7 @@ package com.jm.bffdriver.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
-import com.jm.bffdriver.controller.form.AcceptNewOrderForm;
-import com.jm.bffdriver.controller.form.SearchDriverCurrentOrderForm;
-import com.jm.bffdriver.controller.form.SearchDriverExecuteOrderForm;
-import com.jm.bffdriver.controller.form.SearchOrderForMoveByIdForm;
+import com.jm.bffdriver.controller.form.*;
 import com.jm.bffdriver.service.OrderService;
 import com.jm.common.util.R;
 import io.swagger.v3.oas.annotations.Operation;
@@ -70,6 +67,26 @@ public class OrderControllere {
         form.setDriverId(driverId);
         HashMap map = orderService.searchOrderForMoveById(form);
         return R.ok().put("result",map);
+    }
+
+    @PostMapping("/arriveStartPlace")
+    @Operation(summary = "司机到达上车点")
+    @SaCheckLogin
+    public R arriveStartPlace(@RequestBody @Valid ArriveStartPlaceForm form){
+        long driverId = StpUtil.getLoginIdAsLong();
+        form.setDriverId(driverId);
+        int rows = orderService.arriveStartPlace(form);
+        return R.ok().put("rows",rows);
+    }
+
+    @PostMapping("/startDriving")
+    @SaCheckLogin
+    @Operation(summary = "开始代驾")
+    public R startDriving(@RequestBody @Valid StartDrivingForm form){
+        long driverId = StpUtil.getLoginIdAsLong();
+        form.setDriverId(driverId);
+        int rows = orderService.startDriving(form);
+        return R.ok().put("rows",rows);
     }
 
 }

@@ -33,4 +33,6 @@ public interface OrderMapper {
     HashMap hasCustomerUnAcceptOrder(long customerId);
 
     HashMap searchOrderForMoveById(Map param);
+
+    int updateOrderStatus(Map param);
 }

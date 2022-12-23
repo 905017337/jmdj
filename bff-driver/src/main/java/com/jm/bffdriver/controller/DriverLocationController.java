@@ -46,4 +46,5 @@ public class DriverLocationController {
         driverLocationService.updateOrderLocationCache(form);
         return R.ok();
     }
+
 }

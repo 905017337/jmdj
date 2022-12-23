@@ -168,6 +168,47 @@ public class OrderServiceImpl implements OrderService {
         return map;
     }
 
+    @Override
+    @Transactional
+    @LcnTransaction
+    public int arraiveStartPlace(Map param) {
+        //t添加到达上车点标志位
+        long orderId = MapUtil.getLong(param,"orderId");
+        redisTemplate.opsForValue().set("order_driver_arrivied#"+orderId,"1");
+        int rows = orderMapper.updateOrderStatus(param);
+        if(rows != 1){
+            throw new HxdsException("更新订单状态失败");
+        }
+        return rows;
+    }
+
+    @Override
+    public boolean confirmArriveStartPlace(long orderId) {
+        String key = "order_dirver_arrivied#"+orderId;
+        if(redisTemplate.hasKey(key) || redisTemplate.opsForValue().get(key).toString().equals("1")){
+            redisTemplate.opsForValue().set(key,"2");
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    @Transactional
+    @LcnTransaction
+    public int startDriving(Map param) {
+        long orderId = MapUtil.getLong(param,"orderId");
+        String key = "order_dirver_arrivied#"+orderId;
+        if(redisTemplate.hasKey(key) || redisTemplate.opsForValue().get(key).toString().equals("2")){
+            redisTemplate.delete(key);
+            int rows = orderMapper.updateOrderStatus(param);
+            if(rows != 1){
+                throw new HxdsException("更新订单状态失败");
+            }
+            return rows;
+        }
+        return 0;
+    }
+
 
     @Override
     public HashMap searchDriverTodayBusinessData(long driverId){

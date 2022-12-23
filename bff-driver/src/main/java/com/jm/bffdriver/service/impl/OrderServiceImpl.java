@@ -81,4 +81,25 @@ public class OrderServiceImpl implements OrderService {
         HashMap map = (HashMap) r.get("result");
         return map;
     }
+
+    @Override
+    @Transactional
+    @LcnTransaction
+    public int arriveStartPlace(ArriveStartPlaceForm form) {
+        R r = odrServiceApi.arriveStartPlace(form);
+        int rows = MapUtil.getInt(r,"rows");
+        if(rows == 1){
+            //TODO 发送通知消息
+        }
+        return rows;
+    }
+
+    @Override
+    public int startDriving(StartDrivingForm form) {
+        R r = odrServiceApi.startDriving(form);
+        int rows = MapUtil.getInt(r,"rows");
+        //TODO 发送通知消息
+
+        return rows;
+    }
 }

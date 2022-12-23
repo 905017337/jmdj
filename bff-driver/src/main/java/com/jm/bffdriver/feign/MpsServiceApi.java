@@ -23,4 +23,5 @@ public interface MpsServiceApi {
 
     @PostMapping("/driver/location/updateOrderLocationCache")
     void updateOrderLocationCache(UpdateOrderLocationCacheForm form);
+
 }

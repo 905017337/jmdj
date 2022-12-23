@@ -16,4 +16,5 @@ public interface DriverLocationService {
     void removeLocationCache(RemoveLocationCacheForm form);
 
     void updateOrderLocationCache(UpdateOrderLocationCacheForm form);
+
 }
