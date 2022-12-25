@@ -184,7 +184,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean confirmArriveStartPlace(long orderId) {
-        String key = "order_dirver_arrivied#"+orderId;
+        String key = "order_driver_arrivied#"+orderId;
         if(redisTemplate.hasKey(key) || redisTemplate.opsForValue().get(key).toString().equals("1")){
             redisTemplate.opsForValue().set(key,"2");
             return true;
@@ -197,7 +197,7 @@ public class OrderServiceImpl implements OrderService {
     @LcnTransaction
     public int startDriving(Map param) {
         long orderId = MapUtil.getLong(param,"orderId");
-        String key = "order_dirver_arrivied#"+orderId;
+        String key = "order_driver_arrivied#"+orderId;
         if(redisTemplate.hasKey(key) || redisTemplate.opsForValue().get(key).toString().equals("2")){
             redisTemplate.delete(key);
             int rows = orderMapper.updateOrderStatus(param);

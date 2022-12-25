@@ -1,6 +1,7 @@
 package com.jm.bffdriver.feign;
 
 import com.jm.bffdriver.config.MultipartSupportConfig;
+import com.jm.bffdriver.controller.form.InsertOrderMonitoringForm;
 import com.jm.common.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -21,4 +22,6 @@ public interface NebulaServiceApi {
                        @RequestPart(value = "name") String name,
                        @RequestPart(value = "text",required = false)String text);
 
+    @PostMapping(value = "/monitoring/insertOrderMonitoring")
+    R insertOrderMonitoring(InsertOrderMonitoringForm form);
 }

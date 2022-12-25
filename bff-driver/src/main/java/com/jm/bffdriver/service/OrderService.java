@@ -24,4 +24,5 @@ public interface OrderService {
     int startDriving(StartDrivingForm form);
 
     int updateOrderStatus(UpdateOrderStatusForm form);
+
 }

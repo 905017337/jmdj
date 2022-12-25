@@ -2,6 +2,7 @@ package com.jm.bffdriver.service;
 
 import com.jm.bffdriver.controller.form.ClearNewOrderQueueForm;
 import com.jm.bffdriver.controller.form.ReceiveNewOrderMessageForm;
+import com.jm.bffdriver.controller.form.StartDrivingForm;
 
 import java.util.ArrayList;
 
@@ -15,4 +16,6 @@ public interface NewOrderMessageService {
     ArrayList receiveNewOrderMessage(ReceiveNewOrderMessageForm form);
 
     void clearNewOrderQueue(ClearNewOrderQueueForm form_2);
+
+
 }

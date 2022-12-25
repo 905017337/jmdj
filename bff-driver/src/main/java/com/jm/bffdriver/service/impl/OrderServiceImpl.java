@@ -4,6 +4,7 @@ import cn.hutool.core.map.MapUtil;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jm.bffdriver.controller.form.*;
 import com.jm.bffdriver.feign.CstServiceApi;
+import com.jm.bffdriver.feign.NebulaServiceApi;
 import com.jm.bffdriver.feign.OdrServiceApi;
 import com.jm.bffdriver.service.OrderService;
 import com.jm.common.util.R;
@@ -27,6 +28,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private CstServiceApi cstServiceApi;
+
+    @Resource
+    private NebulaServiceApi nebulaServiceApi;
+
+
     @Override
     @LcnTransaction
     @Transactional
@@ -89,7 +95,11 @@ public class OrderServiceImpl implements OrderService {
         R r = odrServiceApi.arriveStartPlace(form);
         int rows = MapUtil.getInt(r,"rows");
         if(rows == 1){
+            InsertOrderMonitoringForm form1 = new InsertOrderMonitoringForm();
+            form1.setOrderId(form.getOrderId());
+            nebulaServiceApi.insertOrderMonitoring(form1);
             //TODO 发送通知消息
+
         }
         return rows;
     }

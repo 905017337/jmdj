@@ -2,6 +2,7 @@ package com.jm.service.Impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.jm.common.exception.HxdsException;
+import com.jm.mapper.OrderMonitoringMapper;
 import com.jm.mapper.OrderVoiceTextMapper;
 import com.jm.pojo.OrderVoiceTextEntity;
 import com.jm.service.MonitoringService;
@@ -26,6 +27,9 @@ public class MonitoringServiceImpl implements MonitoringService {
 
     @Resource
     private OrderVoiceTextMapper orderVoiceTextMapper;
+
+    @Resource
+    private OrderMonitoringMapper orderMonitoringMapper;
 
     @Value("${minio.endpoint}")
     private String endpoint;
@@ -71,6 +75,16 @@ public class MonitoringServiceImpl implements MonitoringService {
         //TODO 执行文稿内容审查
 
 
+    }
+
+    @Override
+    @Transactional
+    public int insertOrderMonitoring(long orderId) {
+        int rows = orderMonitoringMapper.insert(orderId);
+        if(rows != 1){
+            throw new HxdsException("添加订单监控摘要记录失败");
+        }
+        return rows;
     }
 
 }

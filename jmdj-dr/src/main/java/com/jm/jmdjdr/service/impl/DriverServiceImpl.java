@@ -103,13 +103,18 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public HashMap login(String code) {
+    public HashMap login(String code,String phoneCode) {
         String openId = microAppUtil.getOpenId(code);
         HashMap result = driverDao.login(openId);
         if(result != null && result.containsKey("archive")){
             int temp = MapUtil.getInt(result,"archive");
             boolean archive = temp == 1?true:false;
             result.replace("archive",archive);
+        }
+        String tel = MapUtil.getStr(result,"tel");
+        String realTel = microAppUtil.getTel(phoneCode);
+        if(!tel.equals(realTel)){
+            throw new HxdsException("当前手机号与注册手机号不一致");
         }
         return result;
     }

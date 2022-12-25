@@ -10,4 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 public interface OrderMonitoringMapper {
 
+    int insert(long orderId);
 }

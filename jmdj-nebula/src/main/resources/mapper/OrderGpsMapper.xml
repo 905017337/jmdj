@@ -5,7 +5,7 @@
 <mapper namespace="com.jm.mapper.OrderGPsMapper">
     <insert id="insert" parameterType="com.jm.pojo.OrderGpsEntity">
         UPSERT INTO jmdj.order_gps("id", "order_id", "driver_id", "customer_id", "latitude", "longitude", "speed", "create_time")
-        VALUES(NEXT VALUE FOR og_sequence, ${orderId}, ${driverId}, ${customerId}, '${latitude}', '${longitude}', '${speed}', NOW())
+        VALUES(NEXT VALUE FOR JMDJ.og_sequence, ${orderId}, ${driverId}, ${customerId}, '${latitude}', '${longitude}', '${speed}', NOW())
     </insert>
     <select id="searchOrderGps" parameterType="long" resultType="HashMap">
         SELECT "id",

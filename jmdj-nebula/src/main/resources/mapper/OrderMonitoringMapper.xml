@@ -5,7 +5,7 @@
 <mapper namespace="com.jm.mapper.OrderMonitoringMapper">
     <insert id="insert" parameterType="long">
         UPSERT INTO jmdj.order_monitoring("id","order_id","status","records","safety","reviews","alarm","create_time")
-        VALUES(NEXT VALUE FOR om_sequence, #{orderId}, 1, 0, 'common', 0, 1, NOW())
+        VALUES(NEXT VALUE FOR JMDJ.om_sequence, #{orderId}, 1, 0, 'common', 0, 1, NOW())
     </insert>
     <select id="searchOrderRecordsAndReviews" parameterType="long" resultType="HashMap">
         SELECT "id",

@@ -59,7 +59,8 @@
     <select id="login" resultType="HashMap">
         SELECT CAST(id AS CHAR ) AS id,
             real_auth AS realAuth,
-            archive
+            archive,
+            tel
         from tb_driver
         WHERE `status` != 2 AND open_id=#{openId}
     </select>
