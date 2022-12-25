@@ -154,4 +154,12 @@ public class OrderController {
         int rows = orderService.startDriving(param);
         return R.ok().put("rows",rows);
     }
+
+    @PostMapping("/updateOrderStatus")
+    @Operation(summary = "更新订单状态")
+    public R updateOrderStatus(@RequestBody @Valid UpdateOrderStatusForm form){
+       Map param = BeanUtil.beanToMap(form);
+       int rows = orderService.updadteOrderStatus(param);
+       return R.ok().put("rows",rows);
+    }
 }

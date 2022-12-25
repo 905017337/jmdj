@@ -4,15 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jm.mapper.OrderGPsMapper">
     <insert id="insert" parameterType="com.jm.pojo.OrderGpsEntity">
-        UPSERT INTO hxds.order_gps("id", "order_id", "driver_id", "customer_id", "latitude", "longitude", "speed", "create_time")
-        VALUES(NEXT VALUE FOR hxds.og_sequence, ${orderId}, ${driverId}, ${customerId}, '${latitude}', '${longitude}', '${speed}', NOW())
+        UPSERT INTO jmdj.order_gps("id", "order_id", "driver_id", "customer_id", "latitude", "longitude", "speed", "create_time")
+        VALUES(NEXT VALUE FOR og_sequence, ${orderId}, ${driverId}, ${customerId}, '${latitude}', '${longitude}', '${speed}', NOW())
     </insert>
     <select id="searchOrderGps" parameterType="long" resultType="HashMap">
         SELECT "id",
                "latitude",
                "longitude",
                TO_CHAR("create_time",'yyyy-MM-dd HH:mm:ss') AS "createTime"
-        FROM hxds.order_gps
+        FROM jmdj.order_gps
         WHERE "order_id" = #{orderId}
     </select>
     <select id="searchOrderLastGps" parameterType="long" resultType="HashMap">
@@ -20,14 +20,14 @@
                "latitude",
                "longitude",
                TO_CHAR("create_time",'yyyy-MM-dd HH:mm:ss') AS "createTime"
-        FROM hxds.order_gps
+        FROM jmdj.order_gps
         WHERE "order_id" = #{orderId}
         ORDER BY "id" DESC
             LIMIT 1
     </select>
     <select id="searchOrderAllGps" parameterType="long" resultType="HashMap">
         SELECT "latitude", "longitude"
-        FROM hxds.order_gps
+        FROM jmdj.order_gps
         WHERE "order_id" = #{orderId}
         ORDER BY "id"
     </select>

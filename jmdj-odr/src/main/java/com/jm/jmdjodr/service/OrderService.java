@@ -36,4 +36,6 @@ public interface OrderService {
     boolean confirmArriveStartPlace(long orderId);
 
     int startDriving(Map param);
+
+    int updadteOrderStatus(Map param);
 }

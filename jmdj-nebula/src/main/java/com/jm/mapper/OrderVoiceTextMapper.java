@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @version 1.0
  * @date 2022/12/23 12:44
  */
-@Mapper
+
 public interface OrderVoiceTextMapper {
 
     int insert(OrderVoiceTextEntity entity);

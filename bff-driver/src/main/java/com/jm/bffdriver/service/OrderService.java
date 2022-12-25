@@ -22,4 +22,6 @@ public interface OrderService {
     int  arriveStartPlace(ArriveStartPlaceForm form);
 
     int startDriving(StartDrivingForm form);
+
+    int updateOrderStatus(UpdateOrderStatusForm form);
 }

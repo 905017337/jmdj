@@ -22,9 +22,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @MapperScan("com.jm.mapper")
 @ComponentScan("com.jm.*")
 @EnableAsync
-public class NebulaController {
+public class NebulaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NebulaController.class,args);
+        SpringApplication.run(NebulaApplication.class,args);
     }
 }
